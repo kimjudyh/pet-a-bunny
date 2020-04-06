@@ -9,7 +9,17 @@ const levelProperties = [
     level: 2,
     holes: 16,
     heightAndWidth: 100 / 4 + '%',
-  }
+  },
+  {
+    level: 3,
+    holes: 25,
+    heightAndWidth: 100 / 5 + '%',
+  },
+  {
+    level: 4,
+    holes: 24,
+    heightAndWidth: 100 / 6 + '%',
+  },
 ];
 
 // fill playing field with holes
@@ -20,7 +30,6 @@ const makeLevel = (level) => {
       <img class='bunny' src="img/bunny.svg" alt="bunny">
     </div>
   */
-  // level 1: 4x4 grid
   // grab playing-field
   const playingField = document.querySelector('.playing-field');
   const levelObject = levelProperties[level - 1];
@@ -45,20 +54,25 @@ const makeLevel = (level) => {
     console.log('making holes')
     console.log(playingField);
   }
-
+  // set level
+  const levelSpan = document.querySelector('#level span');
+  levelSpan.textContent = level;
 }
 
 // click on bunny, make it disappear;
 const playingField = document.querySelector('.playing-field');
 playingField.addEventListener('click', (event) => {
   console.log(event);
-  clickedOn = event.target;
-  console.log(typeof clickedOn);
+  const clickedOn = event.target;
+  let scoreSpan = document.querySelector('#score span');
   if (clickedOn.className === 'bunny') {
     console.log('clicked bunny');
     clickedOn.classList.add('clicked');
+    // add 1 point for each bunny click
+    scoreSpan.textContent = parseInt(scoreSpan.textContent) + 1;
+
   }
 
 })
 
-makeLevel(2);
+makeLevel(3);
