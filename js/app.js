@@ -27,6 +27,8 @@ class Bunny {
 
   }
   // func - make bunny timer
+  // func - stop bunny timer
+  // store timer so that it can be stopped
 }
 
 const playingFieldObject = {
@@ -36,7 +38,7 @@ const playingFieldObject = {
 // make bunny appearance timer
 const makeBunnyTimer = (bunny) => {
     // do every 5 s
-  window.setInterval(function () {
+  const bunnyTimer = setInterval(function () {
     // remove any class added to bunny
     if (bunny.classList.contains('clicked')) {
       bunny.classList.remove('clicked');
@@ -48,12 +50,13 @@ const makeBunnyTimer = (bunny) => {
     window.setTimeout(function () {
       // show bunny for 2s
       bunny.style.removeProperty('display');
-      console.log('showing bunny for 2s');
-    }, 2500)
+      console.log('showing bunny');
+    }, Math.floor(Math.random() * 500) + 1000)
 
     // turn display off
     bunny.style['display'] = 'none';
-  }, Math.floor(Math.random() * 2000) + 4000)
+  }, Math.floor(Math.random() * 2000) + 2000)
+  return bunnyTimer;
 }
 
 // fill playing field with holes
@@ -80,9 +83,10 @@ const makeLevel = (level) => {
     const bunnyImg = document.createElement('img');
     bunnyImg.setAttribute('src', 'img/bunny.svg');
     bunnyImg.setAttribute('class', 'bunny');
+    // create snake image
 
     // attach timer to bunny
-    makeBunnyTimer(bunnyImg);
+    bunnyTimer = makeBunnyTimer(bunnyImg);
 
     // append images to hole-area
     holeArea.appendChild(holeImg);
@@ -113,4 +117,24 @@ playingField.addEventListener('click', (event) => {
 
 })
 
-makeLevel(1);
+const clearPlayingField = () => {
+  while (playingField.firstChild) {
+    playingField.removeChild(playingField.firstChild);
+  }
+}
+
+const startStop = document.querySelector('#start-stop button');
+startStop.addEventListener('click', () => {
+  if (startStop.classList.contains('start')) {
+    startStop.classList.remove('start');
+    startStop.classList.add('stop');
+    startStop.textContent = 'STOP';
+    makeLevel(1);
+  }
+  else if (startStop.classList.contains('stop')) {
+    clearPlayingField();
+    startStop.classList.remove('stop');
+    startStop.classList.add('start');
+    startStop.textContent = 'START';
+  }
+})
