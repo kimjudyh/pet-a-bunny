@@ -22,6 +22,21 @@ const levelProperties = [
   },
 ];
 
+// make bunny appearance timer
+const makeBunnyTimer = (bunny) => {
+    window.setInterval(function() {
+    // turn display on
+    bunny.style['display'] = 'on';
+    // wait 2 seconds
+    window.setTimeout( function() {
+      //wait
+      console.log('showing bunny for 2s');
+    }, 2000)
+    // turn display off
+    bunny.style['display'] = 'off';
+  }, 5000)
+}
+
 // fill playing field with holes
 const makeLevel = (level) => {
   /* 
@@ -46,6 +61,10 @@ const makeLevel = (level) => {
     const bunnyImg = document.createElement('img');
     bunnyImg.setAttribute('src', 'img/bunny.svg');
     bunnyImg.setAttribute('class', 'bunny');
+
+    // attach timer to bunny
+    makeBunnyTimer(bunnyImg);
+
     // append images to hole-area
     holeArea.appendChild(holeImg);
     holeArea.appendChild(bunnyImg);
@@ -75,4 +94,4 @@ playingField.addEventListener('click', (event) => {
 
 })
 
-makeLevel(4);
+makeLevel(1);
