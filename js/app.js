@@ -24,12 +24,57 @@ const levelProperties = [
 
 class Bunny {
   constructor() {
-
+    this.bunnyTimer; 
+    this.bunnyTimeout;
+    this.bunnyDOMElement;
+  }
+  // func - make DOM element
+  makeBunnyElement = () => {
+    const bunnyImg = document.createElement('img');
+    bunnyImg.setAttribute('src', 'img/bunny.svg');
+    bunnyImg.setAttribute('class', 'bunny');
+    this.bunnyDOMElement = bunnyImg;
+    return bunnyImg;
   }
   // func - make bunny timer
+  makeBunnyTimer = (bunny) => {
+    // do every 5 s
+    const bunnyTimer = setInterval(function () {
+      // remove any class added to bunny
+      if (bunny.classList.contains('clicked')) {
+        bunny.classList.remove('clicked');
+      }
+      // hide bunny
+      bunny.style['display'] = 'none';
+      console.log('bunny display removed');
+
+      const bunnyTimeout = setTimeout(function () {
+        // show bunny for 2s
+        bunny.style.removeProperty('display');
+        console.log('showing bunny');
+        this.bunnyTimeout = bunnyTimeout;
+      }, Math.floor(Math.random() * 500) + 1000)
+
+      // turn display off
+      bunny.style['display'] = 'none';
+    }, Math.floor(Math.random() * 2000) + 2000)
+    this.bunnyTimer = bunnyTimer;
+    return bunnyTimer;
+  }
   // func - stop bunny timer
+  stopBunnyTimers = () => {
+    clearInterval(this.bunnyTimer);
+    clearTimeout(this.bunnyTimeout);
+  }
   // store timer so that it can be stopped
 }
+
+const testBunny = new Bunny();
+testBunny.makeBunnyElement();
+testBunny.makeBunnyTimer(testBunny.bunnyDOMElement);
+console.log('testBunny DOM', testBunny.bunnyDOMElement);
+console.log('testBunny timer', testBunny.bunnyTimer);
+
 
 const playingFieldObject = {
   // func - make level
