@@ -33,8 +33,6 @@ body {
 
 .hole-area {
   position: relative;
-  height: 25%;
-  width: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
