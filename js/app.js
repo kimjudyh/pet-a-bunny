@@ -75,4 +75,4 @@ playingField.addEventListener('click', (event) => {
 
 })
 
-makeLevel(3);
+makeLevel(4);
