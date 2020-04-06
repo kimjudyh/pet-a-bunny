@@ -74,16 +74,63 @@ testBunny.makeBunnyElement();
 testBunny.makeBunnyTimer(testBunny.bunnyDOMElement);
 console.log('testBunny DOM', testBunny.bunnyDOMElement);
 console.log('testBunny timer', testBunny.bunnyTimer);
+testBunny.stopBunnyTimers();
 
 
 const playingFieldObject = {
+  // bunnies made
+  bunnyArray: [],
   // func - make level
+  makeLevel(level) {
+    // grab playing-field
+    const playingField = document.querySelector('.playing-field');
+    const levelObject = levelProperties[level - 1];
+    for (let i = 1; i <= levelObject.holes; i++) {
+      // create div w/ class 'hole-area'
+      const holeArea = document.createElement('div');
+      holeArea.setAttribute('class', 'hole-area');
+      holeArea.style['height'] = levelObject.heightAndWidth;
+      holeArea.style['width'] = levelObject.heightAndWidth;
+      // create hole images
+      const holeImg = document.createElement('img');
+      holeImg.setAttribute('src', 'img/hole.svg');
+      holeImg.setAttribute('class', 'hole');
+
+      // create bunny object
+      const bunny = new Bunny();
+      bunny.makeBunnyElement();
+      bunny.makeBunnyTimer(bunny.bunnyDOMElement);
+      this.bunnyArray.push(bunny);
+
+      // append images to hole-area
+      holeArea.appendChild(holeImg);
+      holeArea.appendChild(bunny.bunnyDOMElement);
+
+      // append hole-area to playing field
+      playingField.appendChild(holeArea);
+      console.log('making holes')
+    }
+    // set level
+    const levelSpan = document.querySelector('#level span');
+    levelSpan.textContent = level;
+  },
+  clearPlayingField() {
+    // remove all children of playing-field div
+    while (playingField.firstChild) {
+      playingField.removeChild(playingField.firstChild);
+    }
+    // stop all timers
+    for (let i = 0; i < this.bunnyArray.length; i++) {
+      this.bunnyArray[i].stopBunnyTimers();
+    }
+  }
 }
 
 // make bunny appearance timer
 const makeBunnyTimer = (bunny) => {
     // do every 5 s
   const bunnyTimer = setInterval(function () {
+    console.log('interval timer started');
     // remove any class added to bunny
     if (bunny.classList.contains('clicked')) {
       bunny.classList.remove('clicked');
@@ -139,7 +186,6 @@ const makeLevel = (level) => {
     // append hole-area to playing field
     playingField.appendChild(holeArea);
     console.log('making holes')
-    console.log(playingField);
   }
   // set level
   const levelSpan = document.querySelector('#level span');
@@ -174,10 +220,11 @@ startStop.addEventListener('click', () => {
     startStop.classList.remove('start');
     startStop.classList.add('stop');
     startStop.textContent = 'STOP';
-    makeLevel(1);
+
+    playingFieldObject.makeLevel(1);
   }
   else if (startStop.classList.contains('stop')) {
-    clearPlayingField();
+    playingFieldObject.clearPlayingField();
     startStop.classList.remove('stop');
     startStop.classList.add('start');
     startStop.textContent = 'START';
