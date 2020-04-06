@@ -22,19 +22,38 @@ const levelProperties = [
   },
 ];
 
+class Bunny {
+  constructor() {
+
+  }
+  // func - make bunny timer
+}
+
+const playingFieldObject = {
+  // func - make level
+}
+
 // make bunny appearance timer
 const makeBunnyTimer = (bunny) => {
-    window.setInterval(function() {
-    // turn display on
-    bunny.style['display'] = 'on';
-    // wait 2 seconds
-    window.setTimeout( function() {
-      //wait
+    // do every 5 s
+  window.setInterval(function () {
+    // remove any class added to bunny
+    if (bunny.classList.contains('clicked')) {
+      bunny.classList.remove('clicked');
+    }
+    // hide bunny
+    bunny.style['display'] = 'none';
+    console.log('bunny display removed');
+
+    window.setTimeout(function () {
+      // show bunny for 2s
+      bunny.style.removeProperty('display');
       console.log('showing bunny for 2s');
-    }, 2000)
+    }, 2500)
+
     // turn display off
-    bunny.style['display'] = 'off';
-  }, 5000)
+    bunny.style['display'] = 'none';
+  }, Math.floor(Math.random() * 2000) + 4000)
 }
 
 // fill playing field with holes
