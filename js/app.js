@@ -81,11 +81,18 @@ class Bunny {
 const playingFieldObject = {
   // bunnies made
   bunnyArray: [],
+  // level timer
+  levelTimer: null,
+  // func - start level timer
+
   // func - make level
   makeLevel(level) {
     // grab playing-field
     const playingField = document.querySelector('.playing-field');
     const levelObject = levelProperties[level - 1];
+    // set level
+    const levelSpan = document.querySelector('#level span');
+    levelSpan.textContent = level;
     for (let i = 1; i <= levelObject.holes; i++) {
       // create div w/ class 'hole-area'
       const holeArea = document.createElement('div');
@@ -100,8 +107,6 @@ const playingFieldObject = {
       // create bunny object
       const bunny = new Bunny();
       bunny.makeBunnyElement();
-      bunny.makeBunnyTimer(bunny.bunnyDOMElement);
-      this.bunnyArray.push(bunny);
 
       // append images to hole-area
       holeArea.appendChild(holeImg);
@@ -110,10 +115,11 @@ const playingFieldObject = {
       // append hole-area to playing field
       playingField.appendChild(holeArea);
       console.log('making holes')
+
+      // start bunny timers
+      bunny.makeBunnyTimer(bunny.bunnyDOMElement);
+      this.bunnyArray.push(bunny);
     }
-    // set level
-    const levelSpan = document.querySelector('#level span');
-    levelSpan.textContent = level;
   },
   clearPlayingField() {
     // remove all children of playing-field div
@@ -125,6 +131,23 @@ const playingFieldObject = {
       this.bunnyArray[i].stopBunnyTimers();
     }
   }
+}
+
+// set timer
+let time = 30;
+// update timer on game board
+const timerElement = document.querySelector('#timer span');
+const setTimer = () => {
+  const timer = setInterval( () => {
+    timerElement.textContent = time;
+    time --;
+    if (time === 0) {
+      timerElement.textContent = time;
+      clearInterval(timer);
+      playingFieldObject.clearPlayingField();
+    }
+    //updateTime();
+  }, 1000)
 }
 
 // click on bunny, make it disappear;
@@ -139,10 +162,10 @@ playingField.addEventListener('click', (event) => {
     clickedOn.classList.add('clicked');
     // add 1 point for each bunny click
     scoreSpan.textContent = parseInt(scoreSpan.textContent) + 1;
-
   }
 }
 )
+
 
 // start/stop button
 const startStop = document.querySelector('#start-stop button');
@@ -154,6 +177,7 @@ startStop.addEventListener('click', () => {
     startStop.textContent = 'STOP';
 
     playingFieldObject.makeLevel(1);
+    setTimer();
   }
   else if (startStop.classList.contains('stop')) {
     playingFieldObject.clearPlayingField();
