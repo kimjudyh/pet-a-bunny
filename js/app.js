@@ -138,7 +138,7 @@ class HoleArea {
 const holeArea = new HoleArea;
 holeArea.makeElement();
 holeArea.hole;
-holeArea.bunny;
+console.log(holeArea.bunny);
 holeArea.snake;
 holeArea.DOMElement;
 
@@ -159,36 +159,38 @@ const playingFieldObject = {
     levelSpan.textContent = level;
     for (let i = 1; i <= levelObject.holes; i++) {
       // create div w/ class 'hole-area'
-      const holeArea = document.createElement('div');
-      holeArea.setAttribute('class', 'hole-area');
-      holeArea.style['height'] = levelObject.heightAndWidth;
-      holeArea.style['width'] = levelObject.heightAndWidth;
+      //const holeArea = document.createElement('div');
+      //holeArea.setAttribute('class', 'hole-area');
+      const holeArea = new HoleArea();
+      holeArea.makeElement();
+      holeArea.DOMElement.style['height'] = levelObject.heightAndWidth;
+      holeArea.DOMElement.style['width'] = levelObject.heightAndWidth;
       // create hole images
-      const holeImg = document.createElement('img');
-      holeImg.setAttribute('src', 'img/hole.svg');
-      holeImg.setAttribute('class', 'hole');
+      //const holeImg = document.createElement('img');
+      //holeImg.setAttribute('src', 'img/hole.svg');
+      //holeImg.setAttribute('class', 'hole');
 
       // create bunny object
-      const bunny = new Bunny();
-      bunny.makeElement();
+      //const bunny = new Bunny();
+      //bunny.makeElement();
 
       // append images to hole-area
-      holeArea.appendChild(holeImg);
-      holeArea.appendChild(bunny.DOMElement);
+      holeArea.DOMElement.appendChild(holeArea.hole);
+      holeArea.DOMElement.appendChild(holeArea.bunny.DOMElement);
 
       // append hole-area to playing field
-      playingField.appendChild(holeArea);
+      playingField.appendChild(holeArea.DOMElement);
       console.log('making holes')
 
       // start bunny timers
-      bunny.makeBunnyTimer(bunny.DOMElement);
-      this.bunnyArray.push(bunny);
+      holeArea.bunny.makeBunnyTimer(holeArea.bunny.DOMElement);
+      this.bunnyArray.push(holeArea.bunny);
 
       // if level has snakes, create snakes
       if (levelObject.hasSnakes) {
-        const snake = new Snake();
-        snake.makeElement();
-        holeArea.appendChild(snake.DOMElement);
+        //const snake = new Snake();
+        //snake.makeElement();
+        holeArea.DOMElement.appendChild(holeArea.snake.DOMElement);
       }
     }
   },
