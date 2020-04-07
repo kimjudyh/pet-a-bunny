@@ -24,7 +24,9 @@ const levelProperties = [
 
 class Bunny {
   constructor() {
+    // setInterval timer - store so it can be stopped
     this.bunnyTimer; 
+    // setTimeout timer - store so it can be stopped
     this.bunnyTimeout;
     this.bunnyDOMElement;
   }
@@ -66,15 +68,14 @@ class Bunny {
     clearInterval(this.bunnyTimer);
     clearTimeout(this.bunnyTimeout);
   }
-  // store timer so that it can be stopped
 }
 
-const testBunny = new Bunny();
-testBunny.makeBunnyElement();
-testBunny.makeBunnyTimer(testBunny.bunnyDOMElement);
-console.log('testBunny DOM', testBunny.bunnyDOMElement);
-console.log('testBunny timer', testBunny.bunnyTimer);
-testBunny.stopBunnyTimers();
+//const testBunny = new Bunny();
+//testBunny.makeBunnyElement();
+//testBunny.makeBunnyTimer(testBunny.bunnyDOMElement);
+//console.log('testBunny DOM', testBunny.bunnyDOMElement);
+//console.log('testBunny timer', testBunny.bunnyTimer);
+//testBunny.stopBunnyTimers();
 
 
 const playingFieldObject = {
@@ -116,9 +117,9 @@ const playingFieldObject = {
   },
   clearPlayingField() {
     // remove all children of playing-field div
-    while (playingField.firstChild) {
-      playingField.removeChild(playingField.firstChild);
-    }
+    //while (playingField.firstChild) {
+    //  playingField.removeChild(playingField.firstChild);
+    //}
     // stop all timers
     for (let i = 0; i < this.bunnyArray.length; i++) {
       this.bunnyArray[i].stopBunnyTimers();
@@ -126,74 +127,9 @@ const playingFieldObject = {
   }
 }
 
-// make bunny appearance timer
-const makeBunnyTimer = (bunny) => {
-    // do every 5 s
-  const bunnyTimer = setInterval(function () {
-    console.log('interval timer started');
-    // remove any class added to bunny
-    if (bunny.classList.contains('clicked')) {
-      bunny.classList.remove('clicked');
-    }
-    // hide bunny
-    bunny.style['display'] = 'none';
-    console.log('bunny display removed');
-
-    window.setTimeout(function () {
-      // show bunny for 2s
-      bunny.style.removeProperty('display');
-      console.log('showing bunny');
-    }, Math.floor(Math.random() * 500) + 1000)
-
-    // turn display off
-    bunny.style['display'] = 'none';
-  }, Math.floor(Math.random() * 2000) + 2000)
-  return bunnyTimer;
-}
-
-// fill playing field with holes
-const makeLevel = (level) => {
-  /* 
-    <div class='hole-area'>
-      <img class = 'hole' src="img/hole.svg" alt="hole in ground">
-      <img class='bunny' src="img/bunny.svg" alt="bunny">
-    </div>
-  */
-  // grab playing-field
-  const playingField = document.querySelector('.playing-field');
-  const levelObject = levelProperties[level - 1];
-  for (let i = 1; i <= levelObject.holes; i++) {
-    // create div w/ class 'hole-area'
-    const holeArea = document.createElement('div');
-    holeArea.setAttribute('class', 'hole-area');
-    holeArea.style['height'] = levelObject.heightAndWidth;
-    holeArea.style['width'] = levelObject.heightAndWidth;
-    // create hole and bunny images
-    const holeImg = document.createElement('img');
-    holeImg.setAttribute('src', 'img/hole.svg');
-    holeImg.setAttribute('class', 'hole');
-    const bunnyImg = document.createElement('img');
-    bunnyImg.setAttribute('src', 'img/bunny.svg');
-    bunnyImg.setAttribute('class', 'bunny');
-    // create snake image
-
-    // attach timer to bunny
-    bunnyTimer = makeBunnyTimer(bunnyImg);
-
-    // append images to hole-area
-    holeArea.appendChild(holeImg);
-    holeArea.appendChild(bunnyImg);
-    // append hole-area to playing field
-    playingField.appendChild(holeArea);
-    console.log('making holes')
-  }
-  // set level
-  const levelSpan = document.querySelector('#level span');
-  levelSpan.textContent = level;
-}
-
 // click on bunny, make it disappear;
 const playingField = document.querySelector('.playing-field');
+
 playingField.addEventListener('click', (event) => {
   console.log(event);
   const clickedOn = event.target;
@@ -205,16 +141,12 @@ playingField.addEventListener('click', (event) => {
     scoreSpan.textContent = parseInt(scoreSpan.textContent) + 1;
 
   }
-
-})
-
-const clearPlayingField = () => {
-  while (playingField.firstChild) {
-    playingField.removeChild(playingField.firstChild);
-  }
 }
+)
 
+// start/stop button
 const startStop = document.querySelector('#start-stop button');
+
 startStop.addEventListener('click', () => {
   if (startStop.classList.contains('start')) {
     startStop.classList.remove('start');
