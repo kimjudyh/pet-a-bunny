@@ -17,7 +17,7 @@ const levelProperties = [
   },
   {
     level: 4,
-    holes: 24,
+    holes: 36,
     heightAndWidth: 100 / 6 + '%',
   },
 ];
@@ -123,9 +123,9 @@ const playingFieldObject = {
   },
   clearPlayingField() {
     // remove all children of playing-field div
-    //while (playingField.firstChild) {
-    //  playingField.removeChild(playingField.firstChild);
-    //}
+    while (playingField.firstChild) {
+      playingField.removeChild(playingField.firstChild);
+    }
     // stop all timers
     for (let i = 0; i < this.bunnyArray.length; i++) {
       this.bunnyArray[i].stopBunnyTimers();
@@ -148,6 +148,7 @@ const setTimer = () => {
     }
     //updateTime();
   }, 1000)
+  return timer;
 }
 
 // click on bunny, make it disappear;
@@ -166,10 +167,9 @@ playingField.addEventListener('click', (event) => {
 }
 )
 
-
 // start/stop button
 const startStop = document.querySelector('#start-stop button');
-
+let gameTimer;
 startStop.addEventListener('click', () => {
   if (startStop.classList.contains('start')) {
     startStop.classList.remove('start');
@@ -177,12 +177,30 @@ startStop.addEventListener('click', () => {
     startStop.textContent = 'STOP';
 
     playingFieldObject.makeLevel(1);
-    setTimer();
+    time = 30;
+    gameTimer = setTimer();
   }
   else if (startStop.classList.contains('stop')) {
     playingFieldObject.clearPlayingField();
+    clearInterval(gameTimer);
+
     startStop.classList.remove('stop');
     startStop.classList.add('start');
     startStop.textContent = 'START';
   }
+})
+
+// next level button
+const nextLevel = document.querySelector('.next-level button');
+
+nextLevel.addEventListener('click', () => {
+  clearInterval(gameTimer);
+  playingFieldObject.clearPlayingField();
+  const levelSpan = document.querySelector('#level span');
+  const level = parseInt(levelSpan.textContent) + 1;
+  levelSpan.textContent = level;
+  playingFieldObject.makeLevel(level);
+  time = 30;
+  gameTimer = setTimer();
+
 })
