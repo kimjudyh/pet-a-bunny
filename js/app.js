@@ -32,15 +32,15 @@ class Bunny {
     this.bunnyTimer; 
     // setTimeout timer - store so it can be stopped
     this.bunnyTimeout;
-    this.bunnyDOMElement;
+    this.DOMElement;
     this.points = 1;
   }
   // func - make DOM element
-  makeBunnyElement = () => {
+  makeElement = () => {
     const bunnyImg = document.createElement('img');
     bunnyImg.setAttribute('src', 'img/bunny.svg');
     bunnyImg.setAttribute('class', 'bunny');
-    this.bunnyDOMElement = bunnyImg;
+    this.DOMElement = bunnyImg;
     return bunnyImg;
   }
   // func - make bunny timer
@@ -69,38 +69,38 @@ class Bunny {
     return bunnyTimer;
   }
   // func - stop bunny timer
-  stopBunnyTimers = () => {
+  stopTimers = () => {
     clearInterval(this.bunnyTimer);
     clearTimeout(this.bunnyTimeout);
   }
 }
 
 //const testBunny = new Bunny();
-//testBunny.makeBunnyElement();
-//testBunny.makeBunnyTimer(testBunny.bunnyDOMElement);
-//console.log('testBunny DOM', testBunny.bunnyDOMElement);
+//testBunny.makeElement();
+//testBunny.makeBunnyTimer(testBunny.DOMElement);
+//console.log('testBunny DOM', testBunny.DOMElement);
 //console.log('testBunny timer', testBunny.bunnyTimer);
-//testBunny.stopBunnyTimers();
+//testBunny.stopTimers();
 
 class Snake {
   constructor() {
     this.snakeTimer;
     this.snakeTimeout;
-    this.snakeDOMElement;
+    this.DOMElement;
     this.points = -5;
   }
   // func - make snake DOM element
-  makeSnakeElement() {
+  makeElement() {
     const snakeImg = document.createElement('img');
     snakeImg.setAttribute('src', 'img/snake.svg');
     snakeImg.setAttribute('class', 'snake');
-    this.snakeDOMElement = snakeImg;
+    this.DOMElement = snakeImg;
   }
 }
 
 const testSnake = new Snake();
-testSnake.makeSnakeElement();
-console.log(testSnake.snakeDOMElement);
+testSnake.makeElement();
+console.log(testSnake.DOMElement);
 
 // hole area class
 class HoleArea {
@@ -122,10 +122,10 @@ class HoleArea {
     // make bunny element
     // create bunny object
     const bunny = new Bunny();
-    bunny.makeBunnyElement();
+    bunny.makeElement();
     // make snake element
     const snake = new Snake();
-    snake.makeSnakeElement();
+    snake.makeElement();
 
     this.hole = holeImg;
     this.bunny = bunny;
@@ -170,25 +170,25 @@ const playingFieldObject = {
 
       // create bunny object
       const bunny = new Bunny();
-      bunny.makeBunnyElement();
+      bunny.makeElement();
 
       // append images to hole-area
       holeArea.appendChild(holeImg);
-      holeArea.appendChild(bunny.bunnyDOMElement);
+      holeArea.appendChild(bunny.DOMElement);
 
       // append hole-area to playing field
       playingField.appendChild(holeArea);
       console.log('making holes')
 
       // start bunny timers
-      bunny.makeBunnyTimer(bunny.bunnyDOMElement);
+      bunny.makeBunnyTimer(bunny.DOMElement);
       this.bunnyArray.push(bunny);
 
       // if level has snakes, create snakes
       if (levelObject.hasSnakes) {
         const snake = new Snake();
-        snake.makeSnakeElement();
-        holeArea.appendChild(snake.snakeDOMElement);
+        snake.makeElement();
+        holeArea.appendChild(snake.DOMElement);
       }
     }
   },
@@ -199,7 +199,7 @@ const playingFieldObject = {
     }
     // stop all timers
     for (let i = 0; i < this.bunnyArray.length; i++) {
-      this.bunnyArray[i].stopBunnyTimers();
+      this.bunnyArray[i].stopTimers();
     }
   }
 }
