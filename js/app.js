@@ -102,8 +102,8 @@ const testSnake = new Snake();
 testSnake.makeElement();
 console.log(testSnake.DOMElement);
 
-// hole area class
-class HoleArea {
+// tile class
+class Tile {
   constructor() {
     this.bunny;
     this.snake;
@@ -119,7 +119,6 @@ class HoleArea {
     const holeImg = document.createElement('img');
     holeImg.setAttribute('src', 'img/hole.svg');
     holeImg.setAttribute('class', 'hole');
-    // make bunny element
     // create bunny object
     const bunny = new Bunny();
     bunny.makeElement();
@@ -132,19 +131,24 @@ class HoleArea {
     this.snake = snake;
     this.DOMElement = holeArea;
   }
+  makeTimer() {
+    // choose which object to display, ex. snake or bunny
+  }
 
 }
 
-const holeArea = new HoleArea;
-holeArea.makeElement();
-holeArea.hole;
-console.log(holeArea.bunny);
-holeArea.snake;
-holeArea.DOMElement;
+const testTile = new Tile;
+testTile.makeElement();
+testTile.hole;
+console.log(testTile.bunny);
+testTile.snake;
+testTile.DOMElement;
 
 const playingFieldObject = {
   // bunnies made
   bunnyArray: [],
+  // tiles made
+  tileArray: [],
   // level timer
   levelTimer: null,
   // func - start level timer
@@ -161,10 +165,10 @@ const playingFieldObject = {
       // create div w/ class 'hole-area'
       //const holeArea = document.createElement('div');
       //holeArea.setAttribute('class', 'hole-area');
-      const holeArea = new HoleArea();
-      holeArea.makeElement();
-      holeArea.DOMElement.style['height'] = levelObject.heightAndWidth;
-      holeArea.DOMElement.style['width'] = levelObject.heightAndWidth;
+      const tile = new Tile();
+      tile.makeElement();
+      tile.DOMElement.style['height'] = levelObject.heightAndWidth;
+      tile.DOMElement.style['width'] = levelObject.heightAndWidth;
       // create hole images
       //const holeImg = document.createElement('img');
       //holeImg.setAttribute('src', 'img/hole.svg');
@@ -175,22 +179,22 @@ const playingFieldObject = {
       //bunny.makeElement();
 
       // append images to hole-area
-      holeArea.DOMElement.appendChild(holeArea.hole);
-      holeArea.DOMElement.appendChild(holeArea.bunny.DOMElement);
+      tile.DOMElement.appendChild(tile.hole);
+      tile.DOMElement.appendChild(tile.bunny.DOMElement);
 
       // append hole-area to playing field
-      playingField.appendChild(holeArea.DOMElement);
+      playingField.appendChild(tile.DOMElement);
       console.log('making holes')
 
       // start bunny timers
-      holeArea.bunny.makeBunnyTimer(holeArea.bunny.DOMElement);
-      this.bunnyArray.push(holeArea.bunny);
+      tile.bunny.makeBunnyTimer(tile.bunny.DOMElement);
+      this.bunnyArray.push(tile.bunny);
 
       // if level has snakes, create snakes
       if (levelObject.hasSnakes) {
         //const snake = new Snake();
         //snake.makeElement();
-        holeArea.DOMElement.appendChild(holeArea.snake.DOMElement);
+        tile.DOMElement.appendChild(tile.snake.DOMElement);
       }
     }
   },
