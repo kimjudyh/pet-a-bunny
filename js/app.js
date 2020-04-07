@@ -102,6 +102,46 @@ const testSnake = new Snake();
 testSnake.makeSnakeElement();
 console.log(testSnake.snakeDOMElement);
 
+// hole area class
+class HoleArea {
+  constructor() {
+    this.bunny;
+    this.snake;
+    this.hole;
+    this.DOMElement;
+  }
+  // func - make hole-area DOM element
+  makeElement() {
+    // create hole area 
+    const holeArea = document.createElement('div');
+    holeArea.setAttribute('class', 'hole-area');
+    // create hole images
+    const holeImg = document.createElement('img');
+    holeImg.setAttribute('src', 'img/hole.svg');
+    holeImg.setAttribute('class', 'hole');
+    // make bunny element
+    // create bunny object
+    const bunny = new Bunny();
+    bunny.makeBunnyElement();
+    // make snake element
+    const snake = new Snake();
+    snake.makeSnakeElement();
+
+    this.hole = holeImg;
+    this.bunny = bunny;
+    this.snake = snake;
+    this.DOMElement = holeArea;
+  }
+
+}
+
+const holeArea = new HoleArea;
+holeArea.makeElement();
+holeArea.hole;
+holeArea.bunny;
+holeArea.snake;
+holeArea.DOMElement;
+
 const playingFieldObject = {
   // bunnies made
   bunnyArray: [],
@@ -148,6 +188,7 @@ const playingFieldObject = {
       if (levelObject.hasSnakes) {
         const snake = new Snake();
         snake.makeSnakeElement();
+        holeArea.appendChild(snake.snakeDOMElement);
       }
     }
   },

@@ -57,11 +57,12 @@ body {
 
 .snake {
   position: absolute;
-  bottom: 5%;
+  bottom: 15%;
   overflow: hidden;
   z-index: 3;
   height: 60px;
   width: 60px;
+  display: none;
 }
 
 .clicked {
