@@ -4,21 +4,25 @@ const levelProperties = [
     level: 1,
     holes: 9,
     heightAndWidth: 100 / 3 + '%',
+    hasSnakes: true,
   },
   {
     level: 2,
     holes: 16,
     heightAndWidth: 100 / 4 + '%',
+    hasSnakes: true,
   },
   {
     level: 3,
     holes: 25,
     heightAndWidth: 100 / 5 + '%',
+    hasSnakes: true,
   },
   {
     level: 4,
     holes: 36,
     heightAndWidth: 100 / 6 + '%',
+    hasSnakes: true,
   },
 ];
 
@@ -29,6 +33,7 @@ class Bunny {
     // setTimeout timer - store so it can be stopped
     this.bunnyTimeout;
     this.bunnyDOMElement;
+    this.points = 1;
   }
   // func - make DOM element
   makeBunnyElement = () => {
@@ -77,6 +82,25 @@ class Bunny {
 //console.log('testBunny timer', testBunny.bunnyTimer);
 //testBunny.stopBunnyTimers();
 
+class Snake {
+  constructor() {
+    this.snakeTimer;
+    this.snakeTimeout;
+    this.snakeDOMElement;
+    this.points = -5;
+  }
+  // func - make snake DOM element
+  makeSnakeElement() {
+    const snakeImg = document.createElement('img');
+    snakeImg.setAttribute('src', 'img/snake.svg');
+    snakeImg.setAttribute('class', 'snake');
+    this.snakeDOMElement = snakeImg;
+  }
+}
+
+const testSnake = new Snake();
+testSnake.makeSnakeElement();
+console.log(testSnake.snakeDOMElement);
 
 const playingFieldObject = {
   // bunnies made
@@ -119,6 +143,12 @@ const playingFieldObject = {
       // start bunny timers
       bunny.makeBunnyTimer(bunny.bunnyDOMElement);
       this.bunnyArray.push(bunny);
+
+      // if level has snakes, create snakes
+      if (levelObject.hasSnakes) {
+        const snake = new Snake();
+        snake.makeSnakeElement();
+      }
     }
   },
   clearPlayingField() {
@@ -140,13 +170,12 @@ const timerElement = document.querySelector('#timer span');
 const setTimer = () => {
   const timer = setInterval( () => {
     timerElement.textContent = time;
-    time --;
     if (time === 0) {
       timerElement.textContent = time;
       clearInterval(timer);
       playingFieldObject.clearPlayingField();
     }
-    //updateTime();
+    time --;
   }, 1000)
   return timer;
 }
@@ -163,6 +192,12 @@ playingField.addEventListener('click', (event) => {
     clickedOn.classList.add('clicked');
     // add 1 point for each bunny click
     scoreSpan.textContent = parseInt(scoreSpan.textContent) + 1;
+  }
+  else if (clickedOn.className === 'snake') {
+    console.log('clicked snake');
+    clickedOn.classList.add('clicked');
+    // -5 pts for snake
+    scoreSpan.textContent = parseInt(scoreSpan.textContent) - 5;
   }
 }
 )

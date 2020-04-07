@@ -3,6 +3,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 90vh;
+  cursor: url('../img/hand.svg'), default;
 }
 
 .game-board {
@@ -54,6 +55,15 @@ body {
   width: 60px;
 }
 
+.snake {
+  position: absolute;
+  bottom: 5%;
+  overflow: hidden;
+  z-index: 3;
+  height: 60px;
+  width: 60px;
+}
+
 .clicked {
   display: none;
 }
@@ -65,3 +75,4 @@ body {
   border-top: 2px solid gray;
   height: 10%;
 }
+
