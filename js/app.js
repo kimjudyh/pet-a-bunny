@@ -45,6 +45,7 @@ class Bunny {
   }
   // func - make bunny timer
   makeBunnyTimer = (bunny) => {
+    // param bunny: DOM element of the bunny
     // do every 5 s
     const bunnyTimer = setInterval(function () {
       // remove any class added to bunny
@@ -109,6 +110,10 @@ class Tile {
     this.snake;
     this.hole;
     this.DOMElement;
+    this.repeatingTimer;
+    this.interval;
+    this.durationTimer;
+    this.duration;
   }
   // func - make hole-area DOM element
   makeElement() {
@@ -131,8 +136,35 @@ class Tile {
     this.snake = snake;
     this.DOMElement = holeArea;
   }
+  chooseAnimal() {
+    // choose which animal to display, ex. snake or bunny
+    if (Math.floor(Math.random)*2 === 0) {
+      // bunny
+    }
+    else {
+      // snake
+    }
+    // based on animal, get how long timers should be set to
+    this.interval = Math.floor(Math.random() * 2000) + 2000;
+    this.duration = Math.floor(Math.random() * 500) + 1000;
+  }
   makeTimer() {
-    // choose which object to display, ex. snake or bunny
+
+    // do the following every x seconds
+    this.repeatingTimer = setInterval(function() {
+      // remove any class attached to animal
+      // hide animal
+      // do the following for y seconds
+      this.durationTimer = setTimeout(function() {
+        // show animal
+      }, duration);
+      // hide animal
+    }, interval);
+
+  }
+  stopTimers() {
+    clearInterval(this.repeatingTimer);
+    clearTimeout(this.durationTimer);
   }
 
 }
@@ -188,6 +220,8 @@ const playingFieldObject = {
 
       // start bunny timers
       tile.bunny.makeBunnyTimer(tile.bunny.DOMElement);
+      // push tiles to tileArray
+      this.tileArray.push(tile);
       this.bunnyArray.push(tile.bunny);
 
       // if level has snakes, create snakes
