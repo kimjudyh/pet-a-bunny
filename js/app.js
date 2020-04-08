@@ -251,6 +251,7 @@ class Tile {
           snake.DOMElement.classList.remove('clicked');
         }
         // hide snake
+        snake.hide();
         console.log('snake display removed');
         //start snake timer
         snake.makeSnakeTimer(snake.DOMElement);
@@ -300,7 +301,7 @@ class Tile {
         goldBunny.hide();
       }
       console.log('created snake or bunny timer');
-    }, Math.floor(Math.random() * 3000) + 2000);
+    }, Math.floor(Math.random() * 2000) + 1000);
     this.animalTimer = animalTimer;
     //this.interval = Math.floor(Math.random() * 2000) + 2000;
     //this.duration = Math.floor(Math.random() * 500) + 1000;
@@ -379,6 +380,17 @@ const playingFieldObject = {
     }
 
   },
+  endLevel() {
+    // stop all timers
+    // hide all animals, but still show holes
+    for (let i = 0; i < this.tileArray.length; i++) {
+      this.tileArray[i].stopTimers();
+      this.tileArray[i].bunny.hide();
+      this.tileArray[i].whiteBunny.hide();
+      this.tileArray[i].goldBunny.hide();
+      this.tileArray[i].snake.hide();
+    }
+  },
   clearPlayingField() {
     // remove all children of playing-field div
     while (playingField.firstChild) {
@@ -403,7 +415,13 @@ const setTimer = () => {
       timerElement.textContent = time;
       // stop timer, clear playing field
       clearInterval(timer);
-      playingFieldObject.clearPlayingField();
+      playingFieldObject.endLevel();
+      setTimeout(function() {
+        $('.playing-field').fadeOut('slow');
+      }, 1500);
+      setTimeout(function() {
+        playingFieldObject.clearPlayingField();
+      }, 2000)
     }
     // decrement time
     time --;
@@ -501,6 +519,7 @@ nextLevel.addEventListener('click', () => {
   clearInterval(gameTimer);
   // remove objects, stop animal timers
   playingFieldObject.clearPlayingField();
+  playingField.style.removeProperty('display');
   // update level
   const levelSpan = document.querySelector('#level span');
   const level = parseInt(levelSpan.textContent) + 1;
