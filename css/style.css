@@ -62,7 +62,6 @@ body {
   z-index: 3;
   height: 60px;
   width: 60px;
-  display: none;
 }
 
 .clicked {
