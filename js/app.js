@@ -48,27 +48,27 @@ class Bunny {
     // param bunny: DOM element of the bunny
     // do every 5 s
     //const bunnyTimer = setInterval(function () {
-    const bunnyTimer = setTimeout(function() {
+    //const bunnyTimer = setTimeout(function() {
       // remove any class added to bunny
-      if (bunny.classList.contains('clicked')) {
-        bunny.classList.remove('clicked');
-      }
-      // hide bunny
-      bunny.style['display'] = 'none';
-      console.log('bunny display removed');
+      //if (bunny.classList.contains('clicked')) {
+      //  bunny.classList.remove('clicked');
+      //}
+      //// hide bunny
+      //bunny.style['display'] = 'none';
+      //console.log('bunny display removed');
 
       const bunnyTimeout = setTimeout(function () {
         // show bunny for 2s
         bunny.style.removeProperty('display');
         console.log('showing bunny');
         this.bunnyTimeout = bunnyTimeout;
-      }, Math.floor(Math.random() * 500) + 1000)
+      }, Math.floor(Math.random() * 500) + 500)
 
       // turn display off
-      bunny.style['display'] = 'none';
-    }, Math.floor(Math.random() * 2000) + 2000)
-    this.bunnyTimer = bunnyTimer;
-    return bunnyTimer;
+     // bunny.style['display'] = 'none';
+    //}, Math.floor(Math.random() * 2000) + 2000)
+    //this.bunnyTimer = bunnyTimer;
+    //return bunnyTimer;
   }
   // func - stop bunny timer
   stopTimers = () => {
@@ -102,16 +102,16 @@ class Snake {
   // func - make snake timer
   makeSnakeTimer(snake) {
     // do every x sec
-    const timer = setTimeout(function() {
+    //const timer = setTimeout(function() {
     //const timer = setInterval(function() {
       // remove any class added to snake
       //console.log(snake);
-      if (snake.classList.contains('clicked')) {
-        snake.classList.remove('clicked');
-      }
-      // hide snake
-      snake.style['display'] = 'none';
-      console.log('snake display removed');
+      //if (snake.classList.contains('clicked')) {
+      //  snake.classList.remove('clicked');
+      //}
+      //// hide snake
+      //snake.style['display'] = 'none';
+      //console.log('snake display removed');
 
       // show snake for y sec
       const timeout = setTimeout(function() {
@@ -121,11 +121,11 @@ class Snake {
         console.log('timeout', this.snakeTimeout);
       }, Math.floor(Math.random() * 500) + 1000);
       // hide snake
-      snake.style['display'] = 'none';
+      //snake.style['display'] = 'none';
 
-    }, Math.floor(Math.random()*2000) + 2000);
+    //}, Math.floor(Math.random()*2000) + 2000);
 
-    this.snakeTimer = timer;
+    //this.snakeTimer = timer;
   }
   stopTimers() {
     //clearInterval(this.snakeTimer);
@@ -134,11 +134,11 @@ class Snake {
   }
 }
 
-const testSnake = new Snake();
-testSnake.makeElement();
-console.log(testSnake.DOMElement);
-testSnake.makeSnakeTimer(testSnake.DOMElement);
-testSnake.stopTimers();
+//const testSnake = new Snake();
+//testSnake.makeElement();
+//console.log(testSnake.DOMElement);
+//testSnake.makeSnakeTimer(testSnake.DOMElement);
+//testSnake.stopTimers();
 
 // tile class
 class Tile {
@@ -174,30 +174,30 @@ class Tile {
     this.snake = snake;
     this.DOMElement = holeArea;
   };
-  test() {
-    let num = Math.floor(Math.random() * 2);
-    console.log('rand num', num);
+  //test() {
+  //  let num = Math.floor(Math.random() * 2);
+  //  console.log('rand num', num);
 
-      if (num === 0) {
-        // if bunny timer already running, do nothing
-        // if not, stop all other timers
-        // start bunny timer
-        this.bunny.stopTimers();
-        this.snake.stopTimers();
-        // hide snake
-        this.snake.DOMElement.style['display'] = 'none';
-        //this.bunny.makeBunnyTimer(this.bunny.DOMElement);
-      }
-      else {
-        // snake
-        this.bunny.stopTimers();
-        this.snake.stopTimers();
-        // hide bunny
-        this.bunny.DOMElement.style['display'] = 'none';
-        //this.snake.makeSnakeTimer(this.snake.DOMElement);
-      }
-      console.log('created snake or bunny timer');
-  }
+  //    if (num === 0) {
+  //      // if bunny timer already running, do nothing
+  //      // if not, stop all other timers
+  //      // start bunny timer
+  //      this.bunny.stopTimers();
+  //      this.snake.stopTimers();
+  //      // hide snake
+  //      this.snake.DOMElement.style['display'] = 'none';
+  //      //this.bunny.makeBunnyTimer(this.bunny.DOMElement);
+  //    }
+  //    else {
+  //      // snake
+  //      this.bunny.stopTimers();
+  //      this.snake.stopTimers();
+  //      // hide bunny
+  //      this.bunny.DOMElement.style['display'] = 'none';
+  //      //this.snake.makeSnakeTimer(this.snake.DOMElement);
+  //    }
+  //    console.log('created snake or bunny timer');
+  //}
   //chooseAnimalTimer = () => {
   chooseAnimalTimer = (snake, bunny) => {
     // every 5s, choose which animal to display, ex. snake or bunny
@@ -215,7 +215,18 @@ class Tile {
         snake.stopTimers();
         // hide snake
         snake.DOMElement.style['display'] = 'none';
+
+        // remove any class added to bunny
+        if (bunny.DOMElement.classList.contains('clicked')) {
+          bunny.DOMElement.classList.remove('clicked');
+        }
+        // hide bunny
+        bunny.DOMElement.style['display'] = 'none';
+        console.log('bunny display removed');
+        // start bunny timer
         bunny.makeBunnyTimer(bunny.DOMElement);
+        // turn display off
+        bunny.DOMElement.style['display'] = 'none';
       }
       else {
         // snake
@@ -223,10 +234,21 @@ class Tile {
         //snake.stopTimers();
         // hide bunny
         bunny.DOMElement.style['display'] = 'none';
+
+        // remove any class added to snake
+        if (snake.DOMElement.classList.contains('clicked')) {
+          snake.DOMElement.classList.remove('clicked');
+        }
+        // hide snake
+        snake.DOMElement.style['display'] = 'none';
+        console.log('snake display removed');
+        //start snake timer
         snake.makeSnakeTimer(snake.DOMElement);
+        // hide snake
+        snake.DOMElement.style['display'] = 'none';
       }
       console.log('created snake or bunny timer');
-    }, Math.floor(Math.random()* 3000) + 2000);
+    }, Math.floor(Math.random() * 3000) + 2000);
     this.animalTimer = animalTimer;
     //console.log('did animal timer');
     // based on animal, get how long timers should be set to
