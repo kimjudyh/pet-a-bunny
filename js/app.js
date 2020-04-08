@@ -325,22 +325,26 @@ startStop.addEventListener('click', () => {
   // button says start
   if (startStop.classList.contains('start')) {
     // remove instructions overlay
-    const instructions = document.querySelector('.instructions');
-    playingField.removeChild(instructions);
-    startStop.classList.remove('start');
-    // change button to stop
-    startStop.classList.add('stop');
-    startStop.textContent = 'STOP';
+    // jQuery fade out animation
+    $('.instructions').fadeOut('normal');
+    // wait 1s to allow for animation to complete
+    // then fill the playing field
+    setTimeout(function(){
+      time = 30;
+      startStop.classList.remove('start');
+      // change button to stop
+      startStop.classList.add('stop');
+      startStop.textContent = 'STOP';
 
-    // make level 1
-    playingFieldObject.makeLevel(1);
-    // start animal timers
-    for (let i = 0; i < playingFieldObject.tileArray.length; i++) {
-      playingFieldObject.tileArray[i].chooseAnimalTimer(playingFieldObject.tileArray[i].snake, playingFieldObject.tileArray[i].bunny);
-    }
-    // set level countdown timer
-    time = 30;
-    gameTimer = setTimer();
+      // make level 1
+      playingFieldObject.makeLevel(1);
+      // start animal timers
+      for (let i = 0; i < playingFieldObject.tileArray.length; i++) {
+        playingFieldObject.tileArray[i].chooseAnimalTimer(playingFieldObject.tileArray[i].snake, playingFieldObject.tileArray[i].bunny);
+      }
+      // set level countdown timer
+      gameTimer = setTimer();
+    }, 1000);
   }
   // button says stop
   else if (startStop.classList.contains('stop')) {
