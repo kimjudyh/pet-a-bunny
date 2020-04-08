@@ -73,6 +73,43 @@ class Bunny {
   }
 }
 
+class WhiteBunny extends Bunny {
+  constructor() {
+    super(); 
+    this.points = 5;
+  }
+  makeElement = () => {
+    const bunnyImg = document.createElement('img');
+    bunnyImg.setAttribute('src', 'img/white_bunny.svg');
+    bunnyImg.setAttribute('class', 'bunny');
+    this.DOMElement = bunnyImg;
+    return bunnyImg;
+  }
+}
+
+const testWhiteBunny = new WhiteBunny();
+testWhiteBunny.makeElement();
+console.log(testWhiteBunny.DOMElement);
+console.log(testWhiteBunny.points);
+
+class GoldBunny extends Bunny {
+  constructor() {
+    super();
+    this.points = 10;
+  }
+  makeElement = () => {
+    const bunnyImg = document.createElement('img');
+    bunnyImg.setAttribute('src', 'img/gold_bunny.svg');
+    bunnyImg.setAttribute('class', 'bunny');
+    this.DOMElement = bunnyImg;
+    return bunnyImg;
+  }
+}
+
+const testGoldBunny = new GoldBunny();
+testGoldBunny.makeElement();
+console.log(testGoldBunny.DOMElement);
+console.log(testGoldBunny.points);
 
 class Snake {
   constructor() {
