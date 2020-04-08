@@ -32,6 +32,15 @@ body {
   height: 80%;
 }
 
+.instructions {
+  background-color: white;
+  border: 1px solid black;
+  width: 90%;
+  height: 90%;
+  padding: 5px;
+  overflow: auto;
+}
+
 .hole-area {
   position: relative;
   display: flex;

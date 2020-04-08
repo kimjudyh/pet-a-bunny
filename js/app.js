@@ -324,6 +324,9 @@ let gameTimer;
 startStop.addEventListener('click', () => {
   // button says start
   if (startStop.classList.contains('start')) {
+    // remove instructions overlay
+    const instructions = document.querySelector('.instructions');
+    playingField.removeChild(instructions);
     startStop.classList.remove('start');
     // change button to stop
     startStop.classList.add('stop');
