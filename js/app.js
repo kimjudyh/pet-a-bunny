@@ -105,7 +105,7 @@ class GoldBunny extends Bunny {
   makeElement = () => {
     const bunnyImg = document.createElement('img');
     bunnyImg.setAttribute('src', 'img/gold_bunny.svg');
-    bunnyImg.setAttribute('class', 'bunny');
+    bunnyImg.classList.add('bunny', 'gold');
     this.DOMElement = bunnyImg;
     return bunnyImg;
   }
@@ -218,10 +218,11 @@ class Tile {
         // bunny
         snake.stopTimers();
         whiteBunny.stopTimers();
+        goldBunny.stopTimers();
         // hide other animals
         snake.hide();
         whiteBunny.hide();
-        //snake.DOMElement.style['display'] = 'none';
+        goldBunny.hide();
 
         // remove any class added to bunny
         if (bunny.DOMElement.classList.contains('clicked')) {
@@ -229,43 +230,42 @@ class Tile {
         }
         // hide bunny
         bunny.hide();
-        //bunny.DOMElement.style['display'] = 'none';
         console.log('bunny display removed');
         // start bunny timer
         bunny.makeBunnyTimer(bunny.DOMElement);
         // turn display off
         bunny.hide();
-        //bunny.DOMElement.style['display'] = 'none';
       }
       else if (num >= 90 && num < 95) {
         // snake
         bunny.stopTimers();
         whiteBunny.stopTimers();
+        goldBunny.stopTimers();
         // hide other animals
         bunny.hide();
         whiteBunny.hide();
-        //bunny.DOMElement.style['display'] = 'none';
+        goldBunny.hide();
 
         // remove any class added to snake
         if (snake.DOMElement.classList.contains('clicked')) {
           snake.DOMElement.classList.remove('clicked');
         }
         // hide snake
-        //snake.DOMElement.style['display'] = 'none';
         console.log('snake display removed');
         //start snake timer
         snake.makeSnakeTimer(snake.DOMElement);
         // hide snake
         snake.hide();
-        //snake.DOMElement.style['display'] = 'none';
       }
       else if (num >= 95 && num < 100) {
         // white bunny
         // stop other timers
         bunny.stopTimers();
+        goldBunny.stopTimers();
         snake.stopTimers();
         // hide other animals
         bunny.hide();
+        goldBunny.hide();
         snake.hide();
         // remove any class added to white bunny
         if (whiteBunny.DOMElement.classList.contains('clicked')) {
@@ -273,15 +273,31 @@ class Tile {
         }
         // hide white bunny
         whiteBunny.hide();
-        //whiteBunny.DOMElement.style['display'] = 'none';
         // start white bunny timer
         whiteBunny.makeBunnyTimer(whiteBunny.DOMElement);
         // hide white bunny
         whiteBunny.hide();
-        //whiteBunny.DOMElement.style['display'] = 'none';
       }
       else if (num === 100) {
         // gold bunny
+        // stop other timers
+        bunny.stopTimers();
+        whiteBunny.stopTimers();
+        snake.stopTimers();
+        // hide other animals
+        bunny.hide();
+        whiteBunny.hide();
+        snake.hide();
+        // remove any class added to white bunny
+        if (goldBunny.DOMElement.classList.contains('clicked')) {
+          goldBunny.DOMElement.classList.remove('clicked');
+        }
+        // hide white bunny
+        goldBunny.hide();
+        // start white bunny timer
+        goldBunny.makeBunnyTimer(goldBunny.DOMElement);
+        // hide white bunny
+        goldBunny.hide();
       }
       console.log('created snake or bunny timer');
     }, Math.floor(Math.random() * 3000) + 2000);
