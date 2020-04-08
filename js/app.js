@@ -118,7 +118,7 @@ class Snake {
         snake.style.removeProperty('display');
         console.log('showing snake');
         this.snakeTimeout = timeout;
-        console.log('timeout', this.snakeTimeout);
+        //console.log('timeout', this.snakeTimeout);
       }, Math.floor(Math.random() * 500) + 1000);
       // hide snake
       //snake.style['display'] = 'none';
@@ -240,7 +240,7 @@ class Tile {
           snake.DOMElement.classList.remove('clicked');
         }
         // hide snake
-        snake.DOMElement.style['display'] = 'none';
+        //snake.DOMElement.style['display'] = 'none';
         console.log('snake display removed');
         //start snake timer
         snake.makeSnakeTimer(snake.DOMElement);
@@ -316,6 +316,8 @@ const playingFieldObject = {
 
       // if level has snakes, create snakes
       if (levelObject.hasSnakes) {
+        // set display to none
+        tile.snake.DOMElement.style['display'] = 'none';
         tile.DOMElement.appendChild(tile.snake.DOMElement);
       }
 
