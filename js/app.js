@@ -2,7 +2,7 @@ console.log('bunny javascript working');
 const levelProperties = [
   {
     level: 1,
-    holes: 2,
+    holes: 4,
     heightAndWidth: 100 / 3 + '%',
     hasSnakes: true,
   },
@@ -47,8 +47,6 @@ class Bunny {
   makeBunnyTimer = (bunny) => {
     // param bunny: DOM element of the bunny
     // do every 5 s
-    //const bunnyTimer = setInterval(function () {
-    //const bunnyTimer = setTimeout(function() {
       // remove any class added to bunny
       //if (bunny.classList.contains('clicked')) {
       //  bunny.classList.remove('clicked');
@@ -56,34 +54,25 @@ class Bunny {
       //// hide bunny
       //bunny.style['display'] = 'none';
       //console.log('bunny display removed');
-
+      let randomDuration = Math.floor(Math.random() * 500) + 500;
+      console.log('random bunny ', randomDuration);
       const bunnyTimeout = setTimeout(function () {
-        // show bunny for 2s
+        // show bunny 
         bunny.style.removeProperty('display');
         console.log('showing bunny');
         this.bunnyTimeout = bunnyTimeout;
-      }, Math.floor(Math.random() * 500) + 500)
+      }, randomDuration)
 
       // turn display off
      // bunny.style['display'] = 'none';
-    //}, Math.floor(Math.random() * 2000) + 2000)
-    //this.bunnyTimer = bunnyTimer;
-    //return bunnyTimer;
   }
   // func - stop bunny timer
   stopTimers = () => {
-    //clearInterval(this.bunnyTimer);
     clearTimeout(this.bunnyTimer);
     clearTimeout(this.bunnyTimeout);
   }
 }
 
-//const testBunny = new Bunny();
-//testBunny.makeElement();
-//testBunny.makeBunnyTimer(testBunny.DOMElement);
-//console.log('testBunny DOM', testBunny.DOMElement);
-//console.log('testBunny timer', testBunny.bunnyTimer);
-//testBunny.stopTimers();
 
 class Snake {
   constructor() {
@@ -102,8 +91,6 @@ class Snake {
   // func - make snake timer
   makeSnakeTimer(snake) {
     // do every x sec
-    //const timer = setTimeout(function() {
-    //const timer = setInterval(function() {
       // remove any class added to snake
       //console.log(snake);
       //if (snake.classList.contains('clicked')) {
@@ -118,27 +105,17 @@ class Snake {
         snake.style.removeProperty('display');
         console.log('showing snake');
         this.snakeTimeout = timeout;
-        //console.log('timeout', this.snakeTimeout);
       }, Math.floor(Math.random() * 500) + 1000);
       // hide snake
       //snake.style['display'] = 'none';
 
-    //}, Math.floor(Math.random()*2000) + 2000);
-
-    //this.snakeTimer = timer;
   }
   stopTimers() {
-    //clearInterval(this.snakeTimer);
     clearTimeout(this.snakeTimer);
     clearTimeout(this.snakeTimeout);
   }
 }
 
-//const testSnake = new Snake();
-//testSnake.makeElement();
-//console.log(testSnake.DOMElement);
-//testSnake.makeSnakeTimer(testSnake.DOMElement);
-//testSnake.stopTimers();
 
 // tile class
 class Tile {
@@ -174,40 +151,14 @@ class Tile {
     this.snake = snake;
     this.DOMElement = holeArea;
   };
-  //test() {
-  //  let num = Math.floor(Math.random() * 2);
-  //  console.log('rand num', num);
-
-  //    if (num === 0) {
-  //      // if bunny timer already running, do nothing
-  //      // if not, stop all other timers
-  //      // start bunny timer
-  //      this.bunny.stopTimers();
-  //      this.snake.stopTimers();
-  //      // hide snake
-  //      this.snake.DOMElement.style['display'] = 'none';
-  //      //this.bunny.makeBunnyTimer(this.bunny.DOMElement);
-  //    }
-  //    else {
-  //      // snake
-  //      this.bunny.stopTimers();
-  //      this.snake.stopTimers();
-  //      // hide bunny
-  //      this.bunny.DOMElement.style['display'] = 'none';
-  //      //this.snake.makeSnakeTimer(this.snake.DOMElement);
-  //    }
-  //    console.log('created snake or bunny timer');
-  //}
-  //chooseAnimalTimer = () => {
   chooseAnimalTimer = (snake, bunny) => {
     // every 5s, choose which animal to display, ex. snake or bunny
-    //const animalTimer = setInterval(this.test(), 1000);
     const animalTimer = setInterval(function() {
       console.log('animal timer running');
       let num = Math.floor(Math.random() * 12);
       console.log('rand num', num);
 
-      if (num < 10) {
+      if (num < 11) {
         // if bunny timer already running, do nothing
         // if not, stop all other timers
         // start bunny timer
@@ -250,24 +201,8 @@ class Tile {
       console.log('created snake or bunny timer');
     }, Math.floor(Math.random() * 3000) + 2000);
     this.animalTimer = animalTimer;
-    //console.log('did animal timer');
-    // based on animal, get how long timers should be set to
     //this.interval = Math.floor(Math.random() * 2000) + 2000;
     //this.duration = Math.floor(Math.random() * 500) + 1000;
-  }
-  makeTimer() {
-
-    // do the following every x seconds
-    this.repeatingTimer = setInterval(function() {
-      // remove any class attached to animal
-      // hide animal
-      // do the following for y seconds
-      this.durationTimer = setTimeout(function() {
-        // show animal
-      }, duration);
-      // hide animal
-    }, interval);
-
   }
   stopTimers() {
     clearInterval(this.animalTimer);
@@ -277,12 +212,6 @@ class Tile {
 
 }
 
-const testTile = new Tile;
-testTile.makeElement();
-testTile.hole;
-console.log(testTile.bunny);
-testTile.snake;
-testTile.DOMElement;
 
 const playingFieldObject = {
   // bunnies made
@@ -302,9 +231,7 @@ const playingFieldObject = {
     const levelSpan = document.querySelector('#level span');
     levelSpan.textContent = level;
     for (let i = 1; i <= levelObject.holes; i++) {
-      // create div w/ class 'hole-area'
-      //const holeArea = document.createElement('div');
-      //holeArea.setAttribute('class', 'hole-area');
+      // make new Tile object
       const tile = new Tile();
       tile.makeElement();
       tile.DOMElement.style['height'] = levelObject.heightAndWidth;
@@ -325,12 +252,6 @@ const playingFieldObject = {
       playingField.appendChild(tile.DOMElement);
       console.log('making holes')
 
-      //// start bunny timers
-      //tile.bunny.makeBunnyTimer(tile.bunny.DOMElement);
-
-      // try choose animal timer
-      //tile.chooseAnimalTimer(tile.snake, tile.bunny);
-
       // push tiles to tileArray
       this.tileArray.push(tile);
       this.bunnyArray.push(tile.bunny);
@@ -343,9 +264,6 @@ const playingFieldObject = {
       playingField.removeChild(playingField.firstChild);
     }
     // stop all timers
-    //for (let i = 0; i < this.bunnyArray.length; i++) {
-    //  this.bunnyArray[i].stopTimers();
-    //}
     for (let i = 0; i < this.tileArray.length; i++) {
       this.tileArray[i].stopTimers();
     }
@@ -359,11 +277,14 @@ const timerElement = document.querySelector('#timer span');
 const setTimer = () => {
   const timer = setInterval( () => {
     timerElement.textContent = time;
+    // time has reached 0
     if (time === 0) {
       timerElement.textContent = time;
+      // stop timer, clear playing field
       clearInterval(timer);
       playingFieldObject.clearPlayingField();
     }
+    // decrement time
     time --;
   }, 1000)
   return timer;
@@ -374,16 +295,22 @@ const playingField = document.querySelector('.playing-field');
 
 playingField.addEventListener('click', (event) => {
   console.log(event);
+  // get target of click event
   const clickedOn = event.target;
+  // get score DOM element
   let scoreSpan = document.querySelector('#score span');
+  // if clicked bunny
   if (clickedOn.className === 'bunny') {
     console.log('clicked bunny');
+    // add clicked class to change display
     clickedOn.classList.add('clicked');
     // add 1 point for each bunny click
     scoreSpan.textContent = parseInt(scoreSpan.textContent) + 1;
   }
+  // if clicked snake
   else if (clickedOn.className === 'snake') {
     console.log('clicked snake');
+    // add clicked class to change display
     clickedOn.classList.add('clicked');
     // -5 pts for snake
     scoreSpan.textContent = parseInt(scoreSpan.textContent) - 5;
@@ -395,22 +322,31 @@ playingField.addEventListener('click', (event) => {
 const startStop = document.querySelector('#start-stop button');
 let gameTimer;
 startStop.addEventListener('click', () => {
+  // button says start
   if (startStop.classList.contains('start')) {
     startStop.classList.remove('start');
+    // change button to stop
     startStop.classList.add('stop');
     startStop.textContent = 'STOP';
 
+    // make level 1
     playingFieldObject.makeLevel(1);
+    // start animal timers
     for (let i = 0; i < playingFieldObject.tileArray.length; i++) {
       playingFieldObject.tileArray[i].chooseAnimalTimer(playingFieldObject.tileArray[i].snake, playingFieldObject.tileArray[i].bunny);
     }
+    // set level countdown timer
     time = 30;
     gameTimer = setTimer();
   }
+  // button says stop
   else if (startStop.classList.contains('stop')) {
+    // clear playing field, stop animal timers
     playingFieldObject.clearPlayingField();
+    // stop level countdown timer
     clearInterval(gameTimer);
 
+    // change button to start
     startStop.classList.remove('stop');
     startStop.classList.add('start');
     startStop.textContent = 'START';
@@ -421,15 +357,21 @@ startStop.addEventListener('click', () => {
 const nextLevel = document.querySelector('.next-level button');
 
 nextLevel.addEventListener('click', () => {
+  // stop level timer
   clearInterval(gameTimer);
+  // remove objects, stop animal timers
   playingFieldObject.clearPlayingField();
+  // update level
   const levelSpan = document.querySelector('#level span');
   const level = parseInt(levelSpan.textContent) + 1;
   levelSpan.textContent = level;
+  // make next level
   playingFieldObject.makeLevel(level);
+  // start animal timers
   for (let i = 0; i < playingFieldObject.tileArray.length; i++) {
     playingFieldObject.tileArray[i].chooseAnimalTimer(playingFieldObject.tileArray[i].snake, playingFieldObject.tileArray[i].bunny);
   }
+  // reset timer
   time = 30;
   gameTimer = setTimer();
 
