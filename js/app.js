@@ -2,7 +2,7 @@ console.log('bunny javascript working');
 const levelProperties = [
   {
     level: 1,
-    holes: 4,
+    holes: 6,
     heightAndWidth: 100 / 3 + '%',
     hasSnakes: true,
   },
@@ -239,6 +239,8 @@ const playingFieldObject = {
 
       // append images to hole-area
       tile.DOMElement.appendChild(tile.hole);
+      // set bunny display to none at beginning
+      tile.bunny.DOMElement.style['display'] = 'none';
       tile.DOMElement.appendChild(tile.bunny.DOMElement);
 
       // if level has snakes, create snakes
