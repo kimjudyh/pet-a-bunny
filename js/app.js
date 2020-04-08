@@ -26,6 +26,7 @@ const levelProperties = [
   },
 ];
 
+/** ======= CLASSES ======= **/
 class Bunny {
   constructor() {
     // setInterval timer - store so it can be stopped
@@ -85,7 +86,7 @@ class WhiteBunny extends Bunny {
   makeElement = () => {
     const bunnyImg = document.createElement('img');
     bunnyImg.setAttribute('src', 'img/white_bunny.svg');
-    bunnyImg.setAttribute('class', 'bunny');
+    bunnyImg.classList.add('bunny', 'white');
     this.DOMElement = bunnyImg;
     return bunnyImg;
   }
@@ -404,12 +405,23 @@ playingField.addEventListener('click', (event) => {
   // get score DOM element
   let scoreSpan = document.querySelector('#score span');
   // if clicked bunny
-  if (clickedOn.className === 'bunny') {
+  if (clickedOn.classList.contains('bunny')) {
     console.log('clicked bunny');
     // add clicked class to change display
     clickedOn.classList.add('clicked');
-    // add 1 point for each bunny click
-    scoreSpan.textContent = parseInt(scoreSpan.textContent) + 1;
+    if (clickedOn.classList.contains('white')) {
+      // white bunny
+      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].whiteBunny.points;
+    }
+    else if (clickedOn.classList.contains('gold')) {
+      // gold bunny
+      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].goldBunny.points;
+    }
+    else {
+      // normal bunny
+      // add 1 point for each bunny click
+      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].bunny.points;
+    }
   }
   // if clicked snake
   else if (clickedOn.className === 'snake') {
@@ -417,7 +429,7 @@ playingField.addEventListener('click', (event) => {
     // add clicked class to change display
     clickedOn.classList.add('clicked');
     // -5 pts for snake
-    scoreSpan.textContent = parseInt(scoreSpan.textContent) - 5;
+    scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].snake.points;
   }
 }
 )
