@@ -64,7 +64,7 @@ class Bunny {
       // show bunny 
       //$(bunny).fadeIn(150);
       bunny.style.removeProperty('display');
-      console.log('showing bunny');
+      //console.log('showing bunny');
       //}, num);
     }, randomDuration);
 
@@ -73,6 +73,10 @@ class Bunny {
   stopTimers = () => {
     clearTimeout(this.bunnyTimer);
     clearTimeout(this.bunnyTimeout);
+  }
+  // change point value
+  changePoints(newPointValue) {
+    this.points = newPointValue;
   }
 }
 
@@ -138,12 +142,16 @@ class Snake {
     // show snake after y sec
     this.snakeTimeout = setTimeout(function () {
       snake.style.removeProperty('display');
-      console.log('showing snake');
+      //console.log('showing snake');
     }, Math.floor(Math.random() * 500) + 1000);
   }
   stopTimers() {
     clearTimeout(this.snakeTimer);
     clearTimeout(this.snakeTimeout);
+  }
+  // change point value
+  changePoints(newPointValue) {
+    this.points = newPointValue;
   }
 }
 
@@ -195,9 +203,9 @@ class Tile {
     // params: objects
     // every x sec, choose which animal to display, ex. snake or bunny
     this.animalTimer = setInterval(function() {
-      console.log('animal timer running');
+      //console.log('animal timer running');
       let num = Math.floor(Math.random() * 101);
-      console.log('rand num', num);
+      //console.log('rand num', num);
 
       if (num <= 90) {
         // bunny
@@ -215,7 +223,7 @@ class Tile {
         }
         // hide bunny
         bunny.hide();
-        console.log('bunny display removed');
+        //console.log('bunny display removed');
         // start bunny timer
         bunny.makeBunnyTimer(bunny.DOMElement);
         // turn display off
@@ -237,7 +245,7 @@ class Tile {
         }
         // hide snake
         snake.hide();
-        console.log('snake display removed');
+        //console.log('snake display removed');
         //start snake timer
         snake.makeSnakeTimer(snake.DOMElement);
         // hide snake
@@ -285,7 +293,7 @@ class Tile {
         // hide white bunny
         goldBunny.hide();
       }
-      console.log('created snake or bunny timer');
+      //console.log('created snake or bunny timer');
     //}, 2000);
     }, Math.floor(Math.random() * 2000) + 1000);
     //this.animalTimer = animalTimer;
@@ -313,11 +321,12 @@ const playingFieldObject = {
   levelTimer: null,
   // array to keep track of how many animals clicked
   animalCount: {
-    bunny: [],
-    whiteBunny: [],
-    goldBunny: [],
-    snake: [],
+    bunny: 0,
+    whiteBunny: 0,
+    goldBunny: 0,
+    snake: 0,
   },
+  achievementsArray: [],
   // func: make counter that is an array of 0's, with length = # levels
   setUpAnimalCount() {
     for (let i = 0; i < levelProperties.length; i++) {
@@ -371,7 +380,6 @@ const playingFieldObject = {
       // push tiles to tileArray
       this.tileArray.push(tile);
       this.bunnyArray.push(tile.bunny);
-
     }
   },
   startAnimalTimers() {
@@ -379,14 +387,45 @@ const playingFieldObject = {
     for (let i = 0; i < this.tileArray.length; i++) {
       this.tileArray[i].chooseAnimalTimer(this.tileArray[i].snake, this.tileArray[i].bunny, this.tileArray[i].whiteBunny, this.tileArray[i].goldBunny);
     }
+  },
+  // achievements!
+  // bunny bopper
+  // snake handler
+  snakeHandlerCheck() {
+    console.log('checking snake handler');
+    console.log('snake count', this.animalCount.snake);
+    // if num snakes clicked > 10
+    if (this.animalCount.snake > 1) {
+      console.log('achieved snake handler');
+      // change snake points to +5
+      this.tileArray[0].snake.changePoints(5);
+      console.log('changed snake points to 5');
+      // doesn't change points for whole class.. need for loop
+      console.log('checking snake 2', this.tileArray[1].snake.points);
+      // add achievement to achievement array
+      this.achievementsArray.push('Snake Handler');
+    }
+    // display something when this is unlocked...
+  },
+  // magician
+  // gold rush
+  // level transition screen
+  fillLevelScreen() {
 
   },
+  // game over screen
   fillGameOverScreen() {
     document.querySelector('#bunny-count').textContent = this.animalCount.bunny;
     document.querySelector('#white-bunny-count').textContent = this.animalCount.whiteBunny;
     document.querySelector('#gold-bunny-count').textContent = this.animalCount.goldBunny;
     document.querySelector('#snake-count').textContent = this.animalCount.snake;
 
+    const achievementsDiv = document.querySelector('.achievements');
+    for (let i = 0; i < this.achievementsArray.length; i++) {
+      let achievementP = document.createElement('p');
+      achievementP.textContent = this.achievementsArray[i];
+      achievementsDiv.appendChild(achievementP);
+    }
   },
   endLevel() {
     // stop all timers
@@ -482,32 +521,34 @@ playingField.addEventListener('click', (event) => {
       // add points specified in white bunny class
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].whiteBunny.points;
       // increment counter for white bunny clicks for current level
-      playingFieldObject.animalCount.whiteBunny[level - 1]++;
+      playingFieldObject.animalCount.whiteBunny++;
     }
     else if (clickedOn.classList.contains('gold')) {
       // gold bunny
       // add points specified in gold bunny class
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].goldBunny.points;
       // increment counter for gold bunny clicks
-      playingFieldObject.animalCount.goldBunny[level - 1]++;
+      playingFieldObject.animalCount.goldBunny++;
     }
     else {
       // normal bunny
       // add 1 point for each bunny click
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].bunny.points;
       // increment counter for bunny clicks
-      playingFieldObject.animalCount.bunny[level - 1]++;
+      playingFieldObject.animalCount.bunny++;
     }
   }
   // if clicked snake
   else if (clickedOn.className === 'snake') {
     console.log('clicked snake');
+    // increment counter for snake clicks
+    playingFieldObject.animalCount.snake++;
+    // check for snake handler achievement
+    playingFieldObject.snakeHandlerCheck();
     // add clicked class to change display
     clickedOn.classList.add('clicked');
-    // -5 pts for snake
+    // add points specified in snake class 
     scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].snake.points;
-    // increment counter for snake clicks
-    playingFieldObject.animalCount.snake[level - 1]++;
   }
 }
 )
@@ -520,7 +561,6 @@ startStop.addEventListener('click', () => {
   // button says start
   if (startStop.classList.contains('start')) {
     // set up animal count array- 0's with length = # levels
-    playingFieldObject.setUpAnimalCount();
     console.log(playingFieldObject.animalCount);
     // remove instructions overlay
     // jQuery fade out animation
