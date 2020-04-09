@@ -4,7 +4,7 @@ body {
   align-items: center;
   height: 90vh;
   cursor: url('../img/hand.svg'), default;
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Baloo Paaji 2', cursive;
   background-color: #96B3A9;
 }
 
@@ -31,12 +31,13 @@ body {
 }
 
 button {
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Baloo Paaji 2', cursive;
+  font-weight: bold;
   background-color: #FFFFFF;
   opacity: 0.7;
   border: none;
   border-radius: 8px;
-  padding: 8px 8px;
+  padding: 4px 8px;
 }
 
 button:hover {
@@ -76,7 +77,7 @@ button:focus {
   flex-flow: column wrap;
 }
 
-.instructions, .game-over {
+.instructions, .game-over, .level-over {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,20 +90,22 @@ button:focus {
   height: 80%;
   padding: 10px;
   overflow: auto;
+  position: relative;
+  z-index: 5;
 }
 
-.instructions h3, .game-over h3 {
+.instructions h3, .game-over h3, .level-over h3 {
   margin-top: 2px;
   margin-bottom: 5px;
   font-family: 'Pacifico', cursive;
 }
 
-.instructions h4, .game-over h4 {
+.instructions h4, .game-over h4, .level-over h4 {
   margin: 8px;
   font-family: 'Pacifico', cursive;
 }
 
-.instructions p {
+.instructions p, .game-over p, .level-over p{
   margin: 2px;
 }
 
@@ -110,8 +113,8 @@ button:focus {
   display: none;
 }
 
-.game-over p {
-  margin: 2px;
+.level-over {
+  display: none;
 }
 
 .hole-area {
@@ -139,7 +142,7 @@ button:focus {
 
 .snake {
   position: absolute;
-  bottom: 15%;
+  bottom: 18%;
   overflow: hidden;
   z-index: 3;
   height: 60px;
@@ -158,5 +161,22 @@ button:focus {
   height: 10%;
   font-family: 'Pacifico', cursive;
   font-size: 22px;
+  position: relative;
+}
+
+.banner {
+  z-index: 5;
+  position: absolute;
+  bottom: 10px;
+  background-color: #FFFCD6;
+  border-radius: 8px;
+  border: 1px solid gray;
+  width: 75%;
+  text-align: center;
+  display: none;
+}
+
+.banner h5 {
+  margin: 0 0;
 }
 

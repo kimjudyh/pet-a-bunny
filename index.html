@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Rubik&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap" rel="stylesheet">
   <title>Pet a Bunny</title>
   <link rel="stylesheet" href="css/style.css">
   <!-- favicon
@@ -31,13 +32,24 @@
 
     <div class='playing-field-container'>
 
+        <div class="level-over">
+          <h3></h3>
+          <h4>Animal Petting Stats:</h4>
+          <p>Bunny: <span class="bunny-count">0</span></p>
+          <p>White Bunny: <span class="white-bunny-count">0</span></p>
+          <p>Gold Bunny: <span class="gold-bunny-count">0</span></p>
+          <p>Snake: <span class="snake-count">0</span></p>
+          <h4>Achievements:</h4>
+          <div class="achievements"></div>
+        </div>
+
         <div class="game-over">
           <h3>Game Over!</h3>
-          <h4>Animals Petted:</h4>
-          <p>Bunny: <span id="bunny-count">0</span></p>
-          <p>White Bunny: <span id="white-bunny-count">0</span></p>
-          <p>Gold Bunny: <span id="gold-bunny-count">0</span></p>
-          <p>Snake: <span id="snake-count">0</span></p>
+          <h4>Animals Petting Stats:</h4>
+          <p>Bunny: <span class="bunny-count">0</span></p>
+          <p>White Bunny: <span class="white-bunny-count">0</span></p>
+          <p>Gold Bunny: <span class="gold-bunny-count">0</span></p>
+          <p>Snake: <span class="snake-count">0</span></p>
           <h4>Achievements:</h4>
           <div class="achievements"></div>
         </div>
@@ -67,6 +79,9 @@
     </div>
 
     <div class='game-board--bottom-bar'>
+      <div class='banner'>
+        <h5>Gold Rush Unlocked!</h5>
+      </div>
       <div id='score'>
         Score: <span>0</span>
       </div>

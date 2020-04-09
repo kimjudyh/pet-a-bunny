@@ -1,3 +1,17 @@
+/** this file contains: 
+ * levelProperties - array
+ * Bunny - class
+ * WhiteBunny - class
+ * GoldBunny - classe
+ * Snake - class
+ * Tile - class
+ * playingFieldObject - object
+ * setTimer - function
+ * playingField event listener
+ * startStop event listener
+ * nextLevel event listener
+ * **/
+
 console.log('bunny javascript working');
 
 /** ======== LEVEL OBJECT ======= **/
@@ -425,24 +439,31 @@ const playingFieldObject = {
     console.log('checking gold rush');
     console.log('gold bunny count', this.animalCount.goldBunny);
     // if num gold bunnies clicked = 10
-    if (this.animalCount.goldBunny === 2) {
+    if (this.animalCount.goldBunny === 1) {
       console.log('achieved gold rush');
       // change something
       // add achievement to achievement array
       this.achievementsArray.push('Gold Rush');
       // display something when this is unlocked...
+      $('.banner').slideUp('normal');
+      $('.banner').slideDown('normal');
     }
   },
   // level transition screen
-  fillLevelScreen() {
+  fillLevelScreen(level) {
+    document.querySelector('.level-over h3').textContent = `Level ${level} Over!`;
+    document.querySelector('.level-over .bunny-count').textContent = this.animalCount.bunny;
+    document.querySelector('.level-over .white-bunny-count').textContent = this.animalCount.whiteBunny;
+    document.querySelector('.level-over .gold-bunny-count').textContent = this.animalCount.goldBunny;
+    document.querySelector('.level-over .snake-count').textContent = this.animalCount.snake;
 
   },
   // game over screen
   fillGameOverScreen() {
-    document.querySelector('#bunny-count').textContent = this.animalCount.bunny;
-    document.querySelector('#white-bunny-count').textContent = this.animalCount.whiteBunny;
-    document.querySelector('#gold-bunny-count').textContent = this.animalCount.goldBunny;
-    document.querySelector('#snake-count').textContent = this.animalCount.snake;
+    document.querySelector('.game-over .bunny-count').textContent = this.animalCount.bunny;
+    document.querySelector('.game-over .white-bunny-count').textContent = this.animalCount.whiteBunny;
+    document.querySelector('.game-over .gold-bunny-count').textContent = this.animalCount.goldBunny;
+    document.querySelector('.game-over .snake-count').textContent = this.animalCount.snake;
 
     const achievementsDiv = document.querySelector('.achievements');
     for (let i = 0; i < this.achievementsArray.length; i++) {
@@ -510,9 +531,17 @@ const setTimer = (time) => {
         playingFieldObject.fillGameOverScreen();
         setTimeout(function() {
           console.log('displaying game over screen');
-          $('.game-over').fadeIn(1800);
+          $('.game-over').fadeIn('normal');
         }, 3500);
+        }
+      else {
+        console.log('display level over screen');
+        playingFieldObject.fillLevelScreen(level);
+        setTimeout(function () {
+          $('.level-over').fadeIn('normal');
+        }, 3500)
       }
+    
       console.log(playingFieldObject.animalCount);
     }
     // decrement time
@@ -627,24 +656,32 @@ startStop.addEventListener('click', () => {
 const nextLevel = document.querySelector('.next-level button');
 
 nextLevel.addEventListener('click', () => {
+  $('.level-over').fadeOut('normal');
   // stop level timer
   clearInterval(gameTimer);
   // remove objects, stop animal timers
   playingFieldObject.endLevel();
   playingFieldObject.clearPlayingField();
-  playingField.style.removeProperty('display');
-  // update level
-  const levelSpan = document.querySelector('#level span');
-  const level = parseInt(levelSpan.textContent) + 1;
-  levelSpan.textContent = level;
-  // make next level
-  playingFieldObject.makeLevel(level);
-  playingFieldObject.startAnimalTimers();
-  // on last level, disable next level button
-  if (level === levelProperties.length) {
-    nextLevel.setAttribute('disabled', true);
-  }
-  // reset timer
-  gameTimer = setTimer(time);
+  // remove level over screen after a short delay
+  setTimeout(function () {
+    playingField.style.removeProperty('display');
+  }, 500);
+  // wait until level over screen fades out, then execute the following
+  setTimeout(function () {
+
+    // update level
+    const levelSpan = document.querySelector('#level span');
+    const level = parseInt(levelSpan.textContent) + 1;
+    levelSpan.textContent = level;
+    // make next level
+    playingFieldObject.makeLevel(level);
+    playingFieldObject.startAnimalTimers();
+    // on last level, disable next level button
+    if (level === levelProperties.length) {
+      nextLevel.setAttribute('disabled', true);
+    }
+    // reset timer
+    gameTimer = setTimer(time);
+  }, 1000)
 
 })
