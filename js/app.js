@@ -308,8 +308,8 @@ class Tile {
         goldBunny.hide();
       }
       console.log('created snake or bunny timer');
-    }, 2000);
-    //}, Math.floor(Math.random() * 2000) + 1000);
+    //}, 2000);
+    }, Math.floor(Math.random() * 2000) + 1000);
     //this.animalTimer = animalTimer;
     //this.interval = Math.floor(Math.random() * 2000) + 2000;
     //this.duration = Math.floor(Math.random() * 500) + 1000;
