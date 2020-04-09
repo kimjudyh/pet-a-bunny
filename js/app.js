@@ -69,6 +69,7 @@ class Bunny {
       //const bunnyTimeout = setTimeout(function () {
       this.bunnyTimeout = setTimeout(function() {
         // show bunny 
+        //$(bunny).fadeIn(150);
         bunny.style.removeProperty('display');
         console.log('showing bunny');
         //this.bunnyTimeout = bunnyTimeout;
@@ -513,6 +514,7 @@ startStop.addEventListener('click', () => {
   // button says stop
   else if (startStop.classList.contains('stop')) {
     // clear playing field, stop animal timers
+    playingFieldObject.endLevel();
     playingFieldObject.clearPlayingField();
     // stop level countdown timer
     clearInterval(gameTimer);
