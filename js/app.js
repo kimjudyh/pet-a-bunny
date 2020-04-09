@@ -2,13 +2,13 @@ console.log('bunny javascript working');
 const levelProperties = [
   {
     level: 1,
-    holes: 6,
+    holes: 2,
     heightAndWidth: 100 / 3 + '%',
     hasSnakes: true,
   },
   {
     level: 2,
-    holes: 9,
+    holes: 4,
     heightAndWidth: 100 / 3 + '%',
     hasSnakes: true,
   },
@@ -512,6 +512,7 @@ startStop.addEventListener('click', () => {
     }, 1000);
   }
   // button says stop
+  //TODO: fix!!
   else if (startStop.classList.contains('stop')) {
     // clear playing field, stop animal timers
     playingFieldObject.endLevel();
@@ -533,6 +534,7 @@ nextLevel.addEventListener('click', () => {
   // stop level timer
   clearInterval(gameTimer);
   // remove objects, stop animal timers
+  playingFieldObject.endLevel();
   playingFieldObject.clearPlayingField();
   playingField.style.removeProperty('display');
   // update level
