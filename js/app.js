@@ -722,13 +722,13 @@ nextLevel.addEventListener('click', () => {
   setTimeout(function () {
     playingField.style.removeProperty('display');
   }, 500);
+  // update level
+  const levelSpan = document.querySelector('#level span');
+  const level = parseInt(levelSpan.textContent) + 1;
+  levelSpan.textContent = level;
   // wait until level over screen fades out, then execute the following
   setTimeout(function () {
 
-    // update level
-    const levelSpan = document.querySelector('#level span');
-    const level = parseInt(levelSpan.textContent) + 1;
-    levelSpan.textContent = level;
     // make next level
     playingFieldObject.makeLevel(level);
     playingFieldObject.startAnimalTimers();

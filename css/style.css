@@ -180,3 +180,28 @@ button:focus {
   margin: 0 0;
 }
 
+@media screen and (max-width: 500px) {
+  .hole {
+    height: 20px;
+    width: 65px;
+  }
+  
+  .bunny {
+    height: 50px;
+    width: 50px;
+  }
+
+  .snake {
+    height: 50px;
+    width: 50px;
+  }
+
+  #game-title h2 {
+    font-size: 15px;
+  }
+
+  #timer, #score, #level {
+  font-size: 15px;
+}
+
+}
