@@ -418,7 +418,14 @@ const playingFieldObject = {
       console.log('checking snake 2', this.tileArray[1].snake.points);
       // add achievement to achievement array
       this.achievementsArray.push('Snake Handler');
-      // display something when this is unlocked...
+      // change text of banner
+      document.querySelector('.banner h5').textContent = 'Snake Handler Unlocked!';
+      // display banner when this is unlocked...
+      $('.banner').slideToggle('normal');
+      // wait to hide banner
+      setTimeout(function() {
+        $('.banner').slideToggle('normal');
+      }, 2000);
     }
   },
   // magician
@@ -431,7 +438,14 @@ const playingFieldObject = {
       // change something..
       // add achievement to achievement array
       this.achievementsArray.push('Magician');
-      // display something when this is unlocked...
+      // change text of banner
+      document.querySelector('.banner h5').textContent = 'Magician Unlocked!';
+      // display banner when this is unlocked...
+      $('.banner').slideToggle('normal');
+      // wait to hide banner
+      setTimeout(function() {
+        $('.banner').slideToggle('normal');
+      }, 2000);
     }
   },
   // gold rush
@@ -444,9 +458,14 @@ const playingFieldObject = {
       // change something
       // add achievement to achievement array
       this.achievementsArray.push('Gold Rush');
-      // display something when this is unlocked...
-      $('.banner').slideUp('normal');
-      $('.banner').slideDown('normal');
+      // change text of banner
+      document.querySelector('.banner h5').textContent = 'Gold Rush Unlocked!';
+      // display banner when this is unlocked...
+      $('.banner').slideToggle('normal');
+      // wait to hide banner
+      setTimeout(function() {
+        $('.banner').slideToggle('normal');
+      }, 2000);
     }
   },
   // level transition screen
