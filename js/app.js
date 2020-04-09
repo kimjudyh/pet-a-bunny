@@ -374,6 +374,13 @@ const playingFieldObject = {
     }
 
   },
+  fillGameOverScreen() {
+    document.querySelector('#bunny-count').textContent = this.animalCount.bunny;
+    document.querySelector('#white-bunny-count').textContent = this.animalCount.whiteBunny;
+    document.querySelector('#gold-bunny-count').textContent = this.animalCount.goldBunny;
+    document.querySelector('#snake-count').textContent = this.animalCount.snake;
+
+  },
   endLevel() {
     // stop all timers
     // hide all animals, but still show holes
@@ -430,6 +437,7 @@ const setTimer = (time) => {
       console.log('level: ', level)
       if (level === levelProperties.length) {
         console.log('last level');
+        playingFieldObject.fillGameOverScreen();
         setTimeout(function() {
           console.log('displaying game over screen');
           $('.game-over').fadeIn(1800);
