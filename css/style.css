@@ -76,7 +76,12 @@ button:focus {
   flex-flow: column wrap;
 }
 
-.instructions {
+.instructions, .game-over {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   background-color: white;
   opacity: 0.8;
   border: 1px solid black;
@@ -86,9 +91,14 @@ button:focus {
   overflow: auto;
 }
 
-.instructions h3 {
+.instructions h3, .game-over h3 {
   margin-top: 2px;
   margin-bottom: 5px;
+  font-family: 'Pacifico', cursive;
+}
+
+.instructions h4, .game-over h4 {
+  margin: 8px;
   font-family: 'Pacifico', cursive;
 }
 
@@ -96,9 +106,12 @@ button:focus {
   margin: 2px;
 }
 
-.instructions h4 {
-  margin: 8px;
-  font-family: 'Pacifico', cursive;
+.game-over {
+  display: none;
+}
+
+.game-over p {
+  margin: 2px;
 }
 
 .hole-area {

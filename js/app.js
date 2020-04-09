@@ -1,4 +1,6 @@
 console.log('bunny javascript working');
+
+/** ======== LEVEL OBJECT ======= **/
 const levelProperties = [
   {
     level: 1,
@@ -55,29 +57,17 @@ class Bunny {
   // func - make bunny timer
   makeBunnyTimer = (bunny) => {
     // param bunny: DOM element of the bunny
-    // do every 5 s
-      // remove any class added to bunny
-      //if (bunny.classList.contains('clicked')) {
-      //  bunny.classList.remove('clicked');
-      //}
-      //// hide bunny
-      //bunny.style['display'] = 'none';
-      //console.log('bunny display removed');
-      let randomDuration = Math.floor(Math.random() * 500) + 500;
-      //let num = 1000; // 2 s
-      //console.log('random bunny ', num);
-      //const bunnyTimeout = setTimeout(function () {
-      this.bunnyTimeout = setTimeout(function() {
-        // show bunny 
-        //$(bunny).fadeIn(150);
-        bunny.style.removeProperty('display');
-        console.log('showing bunny');
-        //this.bunnyTimeout = bunnyTimeout;
+    let randomDuration = Math.floor(Math.random() * 500) + 500;
+    //let num = 1000; // 2 s
+    //console.log('random bunny ', num);
+    this.bunnyTimeout = setTimeout(function () {
+      // show bunny 
+      //$(bunny).fadeIn(150);
+      bunny.style.removeProperty('display');
+      console.log('showing bunny');
       //}, num);
-      }, randomDuration);
+    }, randomDuration);
 
-      // turn display off
-     // bunny.style['display'] = 'none';
   }
   // func - stop bunny timer
   stopTimers = () => {
@@ -100,10 +90,10 @@ class WhiteBunny extends Bunny {
   }
 }
 
-const testWhiteBunny = new WhiteBunny();
-testWhiteBunny.makeElement();
-console.log(testWhiteBunny.DOMElement);
-console.log(testWhiteBunny.points);
+//const testWhiteBunny = new WhiteBunny();
+//testWhiteBunny.makeElement();
+//console.log(testWhiteBunny.DOMElement);
+//console.log(testWhiteBunny.points);
 
 class GoldBunny extends Bunny {
   constructor() {
@@ -119,10 +109,10 @@ class GoldBunny extends Bunny {
   }
 }
 
-const testGoldBunny = new GoldBunny();
-testGoldBunny.makeElement();
-console.log(testGoldBunny.DOMElement);
-console.log(testGoldBunny.points);
+//const testGoldBunny = new GoldBunny();
+//testGoldBunny.makeElement();
+//console.log(testGoldBunny.DOMElement);
+//console.log(testGoldBunny.points);
 
 class Snake {
   constructor() {
@@ -144,25 +134,12 @@ class Snake {
   }
   // func - make snake timer
   makeSnakeTimer(snake) {
-    // do every x sec
-      // remove any class added to snake
-      //console.log(snake);
-      //if (snake.classList.contains('clicked')) {
-      //  snake.classList.remove('clicked');
-      //}
-      //// hide snake
-      //snake.style['display'] = 'none';
-      //console.log('snake display removed');
-
-      // show snake for y sec
-      this.snakeTimeout = setTimeout(function() {
-        snake.style.removeProperty('display');
-        console.log('showing snake');
-        //this.snakeTimeout = timeout;
-      }, Math.floor(Math.random() * 500) + 1000);
-      // hide snake
-      //snake.style['display'] = 'none';
-
+    // param snake: DOM element
+    // show snake after y sec
+    this.snakeTimeout = setTimeout(function () {
+      snake.style.removeProperty('display');
+      console.log('showing snake');
+    }, Math.floor(Math.random() * 500) + 1000);
   }
   stopTimers() {
     clearTimeout(this.snakeTimer);
@@ -326,6 +303,7 @@ class Tile {
 }
 
 
+/** ======= PLAYING FIELD OBJECT ======== **/
 const playingFieldObject = {
   // bunnies made
   bunnyArray: [],
@@ -333,6 +311,13 @@ const playingFieldObject = {
   tileArray: [],
   // level timer
   levelTimer: null,
+  // array to keep track of how many animals clicked
+  animalCount: {
+    bunny: 0,
+    whiteBunny: 0,
+    goldBunny: 0,
+    snake: 0,
+  },
   // func - start level timer
 
   // func - make level
@@ -417,6 +402,7 @@ const playingFieldObject = {
   }
 }
 
+/** ======== LEVEL TIMER ========= **/
 // set timer
 let time = 30;
 // update timer on game board
@@ -424,6 +410,8 @@ const timerElement = document.querySelector('#timer span');
 const setTimer = (time) => {
   const timer = setInterval( () => {
     timerElement.textContent = time;
+    const levelSpan = document.querySelector('#level span');
+    const level = parseInt(levelSpan.textContent);
     // time has reached 0
     if (time === 0) {
       timerElement.textContent = time;
@@ -437,6 +425,17 @@ const setTimer = (time) => {
       setTimeout(function() {
         playingFieldObject.clearPlayingField();
       }, 3000)
+
+      // game over screen- display if end of last level
+      console.log('level: ', level)
+      if (level === levelProperties.length) {
+        console.log('last level');
+        setTimeout(function() {
+          console.log('displaying game over screen');
+          $('.game-over').fadeIn(1800);
+        }, 3500);
+      }
+      console.log(playingFieldObject.animalCount);
     }
     // decrement time
     time --;
@@ -444,6 +443,8 @@ const setTimer = (time) => {
   return timer;
 }
 
+
+/** ===== ANIMAL CLICK LISTENER ===== **/
 // click on bunny, make it disappear;
 const playingField = document.querySelector('.playing-field');
 
@@ -460,16 +461,24 @@ playingField.addEventListener('click', (event) => {
     clickedOn.classList.add('clicked');
     if (clickedOn.classList.contains('white')) {
       // white bunny
+      // add points specified in white bunny class
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].whiteBunny.points;
+      // increment counter for white bunny clicks
+      playingFieldObject.animalCount.whiteBunny++;
     }
     else if (clickedOn.classList.contains('gold')) {
       // gold bunny
+      // add points specified in gold bunny class
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].goldBunny.points;
+      // increment counter for gold bunny clicks
+      playingFieldObject.animalCount.goldBunny++;
     }
     else {
       // normal bunny
       // add 1 point for each bunny click
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].bunny.points;
+      // increment counter for bunny clicks
+      playingFieldObject.animalCount.bunny++;
     }
   }
   // if clicked snake
@@ -479,10 +488,13 @@ playingField.addEventListener('click', (event) => {
     clickedOn.classList.add('clicked');
     // -5 pts for snake
     scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].snake.points;
+    // increment counter for snake clicks
+    playingFieldObject.animalCount.snake++;
   }
 }
 )
 
+/** ======== BUTTONS ========= **/
 // start/stop button
 const startStop = document.querySelector('#start-stop button');
 let gameTimer;
@@ -503,10 +515,6 @@ startStop.addEventListener('click', () => {
       // make level 1
       playingFieldObject.makeLevel(1);
       playingFieldObject.startAnimalTimers();
-      //// start animal timers
-      //for (let i = 0; i < playingFieldObject.tileArray.length; i++) {
-      //  playingFieldObject.tileArray[i].chooseAnimalTimer(playingFieldObject.tileArray[i].snake, playingFieldObject.tileArray[i].bunny, playingFieldObject.tileArray[i].whiteBunny, playingFieldObject.tileArray[i].goldBunny);
-      //}
       // set level countdown timer
       gameTimer = setTimer(time);
     }, 1000);
