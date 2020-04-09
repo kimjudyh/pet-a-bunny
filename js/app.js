@@ -408,10 +408,10 @@ const playingFieldObject = {
     console.log('checking bunny bopper');
     console.log('bunny count', this.animalCount.bunny);
     // if num bunnies clicked = 100, only need to award achievement once
-    if (this.animalCount.bunny === 10) {
+    if (this.animalCount.bunny === 50) {
       console.log('achieved bunny bopper');
-      // change bunny points to +5
-      this.tileArray[0].bunny.changePoints(5);
+      // change bunny points to +2
+      this.tileArray[0].bunny.changePoints(2);
       console.log('changed bunny points to 5');
       // doesn't change points for whole class.. need for loop
       console.log('checking bunny 2', this.tileArray[1].bunny.points);
@@ -432,7 +432,7 @@ const playingFieldObject = {
     console.log('checking snake handler');
     console.log('snake count', this.animalCount.snake);
     // if num snakes clicked = 10, only need to award achievement once
-    if (this.animalCount.snake === 1) {
+    if (this.animalCount.snake === 10) {
       console.log('achieved snake handler');
       // change snake points to +5
       this.tileArray[0].snake.changePoints(5);
@@ -456,7 +456,7 @@ const playingFieldObject = {
     console.log('checking magician');
     console.log('white bunny count', this.animalCount.whiteBunny);
     // if num white bunnies clicked === 20
-    if (this.animalCount.whiteBunny === 3) {
+    if (this.animalCount.whiteBunny === 20) {
       console.log('achieved magician');
       // change something..
       // add achievement to achievement array
@@ -476,7 +476,7 @@ const playingFieldObject = {
     console.log('checking gold rush');
     console.log('gold bunny count', this.animalCount.goldBunny);
     // if num gold bunnies clicked = 10
-    if (this.animalCount.goldBunny === 1) {
+    if (this.animalCount.goldBunny === 10) {
       console.log('achieved gold rush');
       // change something
       // add achievement to achievement array
@@ -499,7 +499,7 @@ const playingFieldObject = {
     document.querySelector('.level-over .gold-bunny-count').textContent = this.animalCount.goldBunny;
     document.querySelector('.level-over .snake-count').textContent = this.animalCount.snake;
 
-    const achievementsDiv = document.querySelector('.achievements');
+    const achievementsDiv = document.querySelector('.level-over .achievements');
     // clear it out
     while (achievementsDiv.firstChild) {
       achievementsDiv.removeChild(achievementsDiv.firstChild);
@@ -519,7 +519,7 @@ const playingFieldObject = {
     document.querySelector('.game-over .snake-count').textContent = this.animalCount.snake;
 
     // display achievements
-    const achievementsDiv = document.querySelector('.achievements');
+    const achievementsDiv = document.querySelector('.game-over .achievements');
     for (let i = 0; i < this.achievementsArray.length; i++) {
       let achievementP = document.createElement('p');
       achievementP.textContent = this.achievementsArray[i];
