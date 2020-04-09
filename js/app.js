@@ -2,13 +2,13 @@ console.log('bunny javascript working');
 const levelProperties = [
   {
     level: 1,
-    holes: 2,
+    holes: 6,
     heightAndWidth: 100 / 3 + '%',
     hasSnakes: true,
   },
   {
     level: 2,
-    holes: 4,
+    holes: 9,
     heightAndWidth: 100 / 3 + '%',
     hasSnakes: true,
   },
@@ -19,13 +19,13 @@ const levelProperties = [
     hasSnakes: true,
   },
   {
-    level: 3,
+    level: 4,
     holes: 25,
     heightAndWidth: 100 / 5 + '%',
     hasSnakes: true,
   },
   {
-    level: 4,
+    level: 5,
     holes: 36,
     heightAndWidth: 100 / 6 + '%',
     hasSnakes: true,
@@ -512,7 +512,6 @@ startStop.addEventListener('click', () => {
     }, 1000);
   }
   // button says stop
-  //TODO: fix!!
   else if (startStop.classList.contains('stop')) {
     // clear playing field, stop animal timers
     playingFieldObject.endLevel();
@@ -544,10 +543,10 @@ nextLevel.addEventListener('click', () => {
   // make next level
   playingFieldObject.makeLevel(level);
   playingFieldObject.startAnimalTimers();
-  //// start animal timers
-  //for (let i = 0; i < playingFieldObject.tileArray.length; i++) {
-  //  playingFieldObject.tileArray[i].chooseAnimalTimer(playingFieldObject.tileArray[i].snake, playingFieldObject.tileArray[i].bunny);
-  //}
+  // on last level, disable next level button
+  if (level === levelProperties.length) {
+    nextLevel.setAttribute('disabled', true);
+  }
   // reset timer
   gameTimer = setTimer(time);
 
