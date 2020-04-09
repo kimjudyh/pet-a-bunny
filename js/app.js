@@ -404,12 +404,35 @@ const playingFieldObject = {
   },
   // achievements!
   // bunny bopper
+  bunnyBopperCheck() {
+    console.log('checking bunny bopper');
+    console.log('bunny count', this.animalCount.bunny);
+    // if num bunnies clicked = 100, only need to award achievement once
+    if (this.animalCount.bunny === 10) {
+      console.log('achieved bunny bopper');
+      // change bunny points to +5
+      this.tileArray[0].bunny.changePoints(5);
+      console.log('changed bunny points to 5');
+      // doesn't change points for whole class.. need for loop
+      console.log('checking bunny 2', this.tileArray[1].bunny.points);
+      // add achievement to achievement array
+      this.achievementsArray.push('Bunny Bopper');
+      // change text of banner
+      document.querySelector('.banner h5').textContent = 'Bunny Bopper Unlocked!';
+      // display banner when this is unlocked...
+      $('.banner').slideToggle('normal');
+      // wait to hide banner
+      setTimeout(function() {
+        $('.banner').slideToggle('normal');
+      }, 2000);
+    }
+  },
   // snake handler
   snakeHandlerCheck() {
     console.log('checking snake handler');
     console.log('snake count', this.animalCount.snake);
     // if num snakes clicked = 10, only need to award achievement once
-    if (this.animalCount.snake === 10) {
+    if (this.animalCount.snake === 1) {
       console.log('achieved snake handler');
       // change snake points to +5
       this.tileArray[0].snake.changePoints(5);
@@ -433,7 +456,7 @@ const playingFieldObject = {
     console.log('checking magician');
     console.log('white bunny count', this.animalCount.whiteBunny);
     // if num white bunnies clicked === 20
-    if (this.animalCount.whiteBunny === 30) {
+    if (this.animalCount.whiteBunny === 3) {
       console.log('achieved magician');
       // change something..
       // add achievement to achievement array
@@ -476,6 +499,17 @@ const playingFieldObject = {
     document.querySelector('.level-over .gold-bunny-count').textContent = this.animalCount.goldBunny;
     document.querySelector('.level-over .snake-count').textContent = this.animalCount.snake;
 
+    const achievementsDiv = document.querySelector('.achievements');
+    // clear it out
+    while (achievementsDiv.firstChild) {
+      achievementsDiv.removeChild(achievementsDiv.firstChild);
+    }
+    // display achievements
+    for (let i = 0; i < this.achievementsArray.length; i++) {
+      let achievementP = document.createElement('p');
+      achievementP.textContent = this.achievementsArray[i];
+      achievementsDiv.appendChild(achievementP);
+    }
   },
   // game over screen
   fillGameOverScreen() {
@@ -484,6 +518,7 @@ const playingFieldObject = {
     document.querySelector('.game-over .gold-bunny-count').textContent = this.animalCount.goldBunny;
     document.querySelector('.game-over .snake-count').textContent = this.animalCount.snake;
 
+    // display achievements
     const achievementsDiv = document.querySelector('.achievements');
     for (let i = 0; i < this.achievementsArray.length; i++) {
       let achievementP = document.createElement('p');
@@ -610,6 +645,8 @@ playingField.addEventListener('click', (event) => {
       // normal bunny
       // increment counter for bunny clicks
       playingFieldObject.animalCount.bunny++;
+      // check for bunny bopper achievement
+      playingFieldObject.bunnyBopperCheck();
       // add 1 point for each bunny click
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].bunny.points;
     }
