@@ -394,8 +394,8 @@ const playingFieldObject = {
   snakeHandlerCheck() {
     console.log('checking snake handler');
     console.log('snake count', this.animalCount.snake);
-    // if num snakes clicked > 10
-    if (this.animalCount.snake > 1) {
+    // if num snakes clicked = 10, only need to award achievement once
+    if (this.animalCount.snake === 10) {
       console.log('achieved snake handler');
       // change snake points to +5
       this.tileArray[0].snake.changePoints(5);
@@ -404,11 +404,35 @@ const playingFieldObject = {
       console.log('checking snake 2', this.tileArray[1].snake.points);
       // add achievement to achievement array
       this.achievementsArray.push('Snake Handler');
+      // display something when this is unlocked...
     }
-    // display something when this is unlocked...
   },
   // magician
+  magicianCheck() {
+    console.log('checking magician');
+    console.log('white bunny count', this.animalCount.whiteBunny);
+    // if num white bunnies clicked === 20
+    if (this.animalCount.whiteBunny === 30) {
+      console.log('achieved magician');
+      // change something..
+      // add achievement to achievement array
+      this.achievementsArray.push('Magician');
+      // display something when this is unlocked...
+    }
+  },
   // gold rush
+  goldRushCheck() {
+    console.log('checking gold rush');
+    console.log('gold bunny count', this.animalCount.goldBunny);
+    // if num gold bunnies clicked = 10
+    if (this.animalCount.goldBunny === 2) {
+      console.log('achieved gold rush');
+      // change something
+      // add achievement to achievement array
+      this.achievementsArray.push('Gold Rush');
+      // display something when this is unlocked...
+    }
+  },
   // level transition screen
   fillLevelScreen() {
 
@@ -518,24 +542,28 @@ playingField.addEventListener('click', (event) => {
     clickedOn.classList.add('clicked');
     if (clickedOn.classList.contains('white')) {
       // white bunny
-      // add points specified in white bunny class
-      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].whiteBunny.points;
       // increment counter for white bunny clicks for current level
       playingFieldObject.animalCount.whiteBunny++;
+      // check for magician achievement
+      playingFieldObject.magicianCheck();
+      // add points specified in white bunny class
+      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].whiteBunny.points;
     }
     else if (clickedOn.classList.contains('gold')) {
       // gold bunny
-      // add points specified in gold bunny class
-      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].goldBunny.points;
       // increment counter for gold bunny clicks
       playingFieldObject.animalCount.goldBunny++;
+      // check for gold rush achievement
+      playingFieldObject.goldRushCheck();
+      // add points specified in gold bunny class
+      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].goldBunny.points;
     }
     else {
       // normal bunny
-      // add 1 point for each bunny click
-      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].bunny.points;
       // increment counter for bunny clicks
       playingFieldObject.animalCount.bunny++;
+      // add 1 point for each bunny click
+      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].bunny.points;
     }
   }
   // if clicked snake
