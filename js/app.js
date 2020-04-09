@@ -313,13 +313,20 @@ const playingFieldObject = {
   levelTimer: null,
   // array to keep track of how many animals clicked
   animalCount: {
-    bunny: 0,
-    whiteBunny: 0,
-    goldBunny: 0,
-    snake: 0,
+    bunny: [],
+    whiteBunny: [],
+    goldBunny: [],
+    snake: [],
   },
-  // func - start level timer
-
+  // func: make counter that is an array of 0's, with length = # levels
+  setUpAnimalCount() {
+    for (let i = 0; i < levelProperties.length; i++) {
+      this.animalCount.bunny.push(0);
+      this.animalCount.whiteBunny.push(0);
+      this.animalCount.goldBunny.push(0);
+      this.animalCount.snake.push(0);
+    }
+  },
   // func - make level
   makeLevel(level) {
     // grab playing-field
@@ -462,6 +469,9 @@ playingField.addEventListener('click', (event) => {
   const clickedOn = event.target;
   // get score DOM element
   let scoreSpan = document.querySelector('#score span');
+  // get current level
+  const levelSpan = document.querySelector('#level span');
+  const level = parseInt(levelSpan.textContent);
   // if clicked bunny
   if (clickedOn.classList.contains('bunny')) {
     console.log('clicked bunny');
@@ -471,22 +481,22 @@ playingField.addEventListener('click', (event) => {
       // white bunny
       // add points specified in white bunny class
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].whiteBunny.points;
-      // increment counter for white bunny clicks
-      playingFieldObject.animalCount.whiteBunny++;
+      // increment counter for white bunny clicks for current level
+      playingFieldObject.animalCount.whiteBunny[level - 1]++;
     }
     else if (clickedOn.classList.contains('gold')) {
       // gold bunny
       // add points specified in gold bunny class
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].goldBunny.points;
       // increment counter for gold bunny clicks
-      playingFieldObject.animalCount.goldBunny++;
+      playingFieldObject.animalCount.goldBunny[level - 1]++;
     }
     else {
       // normal bunny
       // add 1 point for each bunny click
       scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].bunny.points;
       // increment counter for bunny clicks
-      playingFieldObject.animalCount.bunny++;
+      playingFieldObject.animalCount.bunny[level - 1]++;
     }
   }
   // if clicked snake
@@ -497,7 +507,7 @@ playingField.addEventListener('click', (event) => {
     // -5 pts for snake
     scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].snake.points;
     // increment counter for snake clicks
-    playingFieldObject.animalCount.snake++;
+    playingFieldObject.animalCount.snake[level - 1]++;
   }
 }
 )
@@ -509,6 +519,9 @@ let gameTimer;
 startStop.addEventListener('click', () => {
   // button says start
   if (startStop.classList.contains('start')) {
+    // set up animal count array- 0's with length = # levels
+    playingFieldObject.setUpAnimalCount();
+    console.log(playingFieldObject.animalCount);
     // remove instructions overlay
     // jQuery fade out animation
     $('.instructions').fadeOut('normal');
