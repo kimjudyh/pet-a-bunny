@@ -506,6 +506,7 @@ const playingFieldObject = {
     document.querySelector('.game-over .snake-count').textContent = this.animalCount.snake;
 
     const achievementsDiv = document.querySelector('.game-over .achievements');
+    console.log(achievementsDiv);
     // clear it out
     while (achievementsDiv.firstChild) {
       achievementsDiv.removeChild(achievementsDiv.firstChild);
