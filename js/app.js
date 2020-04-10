@@ -531,9 +531,9 @@ const playingFieldObject = {
     // hide all animals, but still show holes
     console.log('ending level');
     for (let i = 0; i < this.tileArray.length; i++) {
-      console.log('stopping timers');
+      //console.log('stopping timers');
       this.tileArray[i].stopTimers();
-      console.log('hiding animals');
+      //console.log('hiding animals');
       this.tileArray[i].bunny.hide();
       this.tileArray[i].whiteBunny.hide();
       this.tileArray[i].goldBunny.hide();
@@ -675,6 +675,8 @@ const startStop = document.querySelector('#start-stop button');
 const instructions = document.querySelector('.instructions');
 let gameTimer;
 startStop.addEventListener('click', () => {
+  // disable so no one clicks multiple times
+  startStop.setAttribute('disabled', true);
   // button says start
   if (startStop.classList.contains('start')) {
     // set up animal count array- 0's with length = # levels
@@ -691,6 +693,7 @@ startStop.addEventListener('click', () => {
       // change button to stop
       startStop.classList.add('restart');
       startStop.textContent = 'RESTART';
+      startStop.removeAttribute('disabled');
 
       // make level 1
       playingFieldObject.makeLevel(1);
@@ -731,7 +734,14 @@ startStop.addEventListener('click', () => {
     playingFieldObject.animalCount.goldBunny = 0;
     playingFieldObject.animalCount.snake = 0;
     // hide level over
+    document.querySelector('.level-over').style.removeProperty('display');
+    document.querySelector('.level-over').setAttribute('display', 'none');
+    console.log('hiding level over');
     // hide game over
+    document.querySelector('.game-over').style.removeProperty('display');
+    document.querySelector('.game-over').setAttribute('display', 'none');
+    // display playing-field
+    document.querySelector('.playing-field').style.removeProperty('display');
     // display instructions
     document.querySelector('.playing-field').appendChild(document.querySelector('.instructions'));
     document.querySelector('.instructions').style.removeProperty('display');
