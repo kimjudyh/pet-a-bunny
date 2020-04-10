@@ -57,7 +57,7 @@ class Bunny {
     this.points = 1;
   }
   // func - make DOM element
-  makeElement = () => {
+  makeElement () {
     const bunnyImg = document.createElement('img');
     bunnyImg.setAttribute('src', 'img/bunny.svg');
     bunnyImg.setAttribute('class', 'bunny');
@@ -69,7 +69,7 @@ class Bunny {
     this.DOMElement.style['display'] = 'none';
   }
   // func - make bunny timer
-  makeBunnyTimer = (bunny) => {
+  makeBunnyTimer (bunny) {
     // param bunny: DOM element of the bunny
     let randomDuration = Math.floor(Math.random() * 500) + 500;
     //let num = 1000; // 2 s
@@ -84,7 +84,7 @@ class Bunny {
 
   }
   // func - stop bunny timer
-  stopTimers = () => {
+  stopTimers () {
     clearTimeout(this.bunnyTimer);
     clearTimeout(this.bunnyTimeout);
   }
@@ -99,7 +99,7 @@ class WhiteBunny extends Bunny {
     super(); 
     this.points = 5;
   }
-  makeElement = () => {
+  makeElement () {
     const bunnyImg = document.createElement('img');
     bunnyImg.setAttribute('src', 'img/white_bunny.svg');
     bunnyImg.classList.add('bunny', 'white');
@@ -118,7 +118,7 @@ class GoldBunny extends Bunny {
     super();
     this.points = 10;
   }
-  makeElement = () => {
+  makeElement () {
     const bunnyImg = document.createElement('img');
     bunnyImg.setAttribute('src', 'img/gold_bunny.svg');
     bunnyImg.classList.add('bunny', 'gold');
@@ -213,7 +213,7 @@ class Tile {
     this.whiteBunny = whiteBunny;
     this.goldBunny = goldBunny;
   };
-  chooseAnimalTimer = (snake, bunny, whiteBunny, goldBunny) => {
+  chooseAnimalTimer (snake, bunny, whiteBunny, goldBunny) {
     // params: objects
     // every x sec, choose which animal to display, ex. snake or bunny
     this.animalTimer = setInterval(function() {
@@ -559,8 +559,8 @@ const playingFieldObject = {
 let time = 30;
 // update timer on game board
 const timerElement = document.querySelector('#timer span');
-const setTimer = (time) => {
-  const timer = setInterval( () => {
+const setTimer = function(time) {
+  const timer = setInterval( function() {
     timerElement.textContent = time;
     const levelSpan = document.querySelector('#level span');
     const level = parseInt(levelSpan.textContent);
@@ -702,9 +702,9 @@ startStop.addEventListener('click', () => {
     clearInterval(gameTimer);
 
     // change button to start
-    startStop.classList.remove('stop');
-    startStop.classList.add('start');
-    startStop.textContent = 'START';
+    //startStop.classList.remove('stop');
+    //startStop.classList.add('start');
+    //startStop.textContent = 'START';
   }
 })
 
