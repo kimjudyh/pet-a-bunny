@@ -392,7 +392,7 @@ const playingFieldObject = {
   bunnyBopperCheck() {
     //console.log('checking bunny bopper');
     //console.log('bunny count', this.animalCount.bunny);
-    // if num bunnies clicked = 100, only need to award achievement once
+    // if num bunnies clicked = x, only need to award achievement once
     if (this.animalCount.bunny === 50) {
       //console.log('achieved bunny bopper');
       // change bunny points to +2
