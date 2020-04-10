@@ -750,6 +750,10 @@ startStop.addEventListener('click', () => {
     startStop.classList.remove('restart');
     startStop.classList.add('start');
     startStop.textContent = 'START';
+    // disable next level button
+    const nextLevel = document.querySelector('.next-level button');
+    nextLevel.setAttribute('disabled', true);
+    // enable start button
     startStop.removeAttribute('disabled');
     
   }
