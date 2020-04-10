@@ -749,6 +749,7 @@ startStop.addEventListener('click', () => {
     startStop.classList.remove('restart');
     startStop.classList.add('start');
     startStop.textContent = 'START';
+    startStop.removeAttribute('disabled');
     
   }
 })
