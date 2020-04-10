@@ -327,8 +327,6 @@ class Tile {
 
 /** ======= PLAYING FIELD OBJECT ======== **/
 const playingFieldObject = {
-  // bunnies made
-  bunnyArray: [],
   // tiles made
   tileArray: [],
   // level timer
@@ -340,6 +338,10 @@ const playingFieldObject = {
     goldBunny: 0,
     snake: 0,
   },
+  // game score
+  score: 0,
+  // level
+  level: 1,
   achievementsArray: [],
   // func: make counter that is an array of 0's, with length = # levels
   //setUpAnimalCount() {
@@ -369,13 +371,10 @@ const playingFieldObject = {
       tile.DOMElement.appendChild(tile.hole);
       // set bunny display to none at beginning
       tile.bunny.hide();
-      //tile.bunny.DOMElement.style['display'] = 'none';
       tile.DOMElement.appendChild(tile.bunny.DOMElement);
       // add special bunnies
       tile.whiteBunny.hide();
       tile.goldBunny.hide();
-      //tile.whiteBunny.DOMElement.style['display'] = 'none';
-      //tile.goldBunny.DOMElement.style['display'] = 'none';
       tile.DOMElement.appendChild(tile.whiteBunny.DOMElement);
       tile.DOMElement.appendChild(tile.goldBunny.DOMElement);
 
@@ -383,7 +382,6 @@ const playingFieldObject = {
       if (levelObject.hasSnakes) {
         // set display to none
         tile.snake.hide();
-        //tile.snake.DOMElement.style['display'] = 'none';
         tile.DOMElement.appendChild(tile.snake.DOMElement);
       }
 
@@ -393,7 +391,6 @@ const playingFieldObject = {
 
       // push tiles to tileArray
       this.tileArray.push(tile);
-      this.bunnyArray.push(tile.bunny);
     }
   },
   startAnimalTimers() {
@@ -458,7 +455,8 @@ const playingFieldObject = {
     // if num white bunnies clicked === 20
     if (this.animalCount.whiteBunny === 20) {
       console.log('achieved magician');
-      // change something..
+      // add x points to score, getting in later level gives less points
+      this.score += Math.floor(300/ this.level);
       // add achievement to achievement array
       this.achievementsArray.push('Magician');
       // change text of banner
@@ -478,7 +476,8 @@ const playingFieldObject = {
     // if num gold bunnies clicked = 10
     if (this.animalCount.goldBunny === 10) {
       console.log('achieved gold rush');
-      // change something
+      // add x points to score, getting in later level gives less points
+      this.score += Math.floor(600 / this.level);
       // add achievement to achievement array
       this.achievementsArray.push('Gold Rush');
       // change text of banner
@@ -518,6 +517,10 @@ const playingFieldObject = {
     document.querySelector('.game-over .gold-bunny-count').textContent = this.animalCount.goldBunny;
     document.querySelector('.game-over .snake-count').textContent = this.animalCount.snake;
 
+    // clear it out
+    while (achievementsDiv.firstChild) {
+      achievementsDiv.removeChild(achievementsDiv.firstChild);
+    }
     // display achievements
     const achievementsDiv = document.querySelector('.game-over .achievements');
     for (let i = 0; i < this.achievementsArray.length; i++) {
@@ -618,9 +621,11 @@ playingField.addEventListener('click', (event) => {
   const clickedOn = event.target;
   // get score DOM element
   let scoreSpan = document.querySelector('#score span');
+  // save to playingFieldObject
+  playingFieldObject.score = parseInt(scoreSpan.textContent);
   // get current level
   const levelSpan = document.querySelector('#level span');
-  const level = parseInt(levelSpan.textContent);
+  playingFieldObject.level = parseInt(levelSpan.textContent);
   // if clicked bunny
   if (clickedOn.classList.contains('bunny')) {
     console.log('clicked bunny');
@@ -633,7 +638,9 @@ playingField.addEventListener('click', (event) => {
       // check for magician achievement
       playingFieldObject.magicianCheck();
       // add points specified in white bunny class
-      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].whiteBunny.points;
+      
+      scoreSpan.textContent = playingFieldObject.score + playingFieldObject.tileArray[0].whiteBunny.points;
+      //scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].whiteBunny.points;
     }
     else if (clickedOn.classList.contains('gold')) {
       // gold bunny
@@ -642,7 +649,8 @@ playingField.addEventListener('click', (event) => {
       // check for gold rush achievement
       playingFieldObject.goldRushCheck();
       // add points specified in gold bunny class
-      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].goldBunny.points;
+      scoreSpan.textContent = playingFieldObject.score + playingFieldObject.tileArray[0].goldBunny.points;
+      //scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].goldBunny.points;
     }
     else {
       // normal bunny
@@ -651,7 +659,8 @@ playingField.addEventListener('click', (event) => {
       // check for bunny bopper achievement
       playingFieldObject.bunnyBopperCheck();
       // add 1 point for each bunny click
-      scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].bunny.points;
+      scoreSpan.textContent = playingFieldObject.score + playingFieldObject.tileArray[0].bunny.points;
+      //scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].bunny.points;
     }
   }
   // if clicked snake
@@ -664,7 +673,8 @@ playingField.addEventListener('click', (event) => {
     // add clicked class to change display
     clickedOn.classList.add('clicked');
     // add points specified in snake class 
-    scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].snake.points;
+    scoreSpan.textContent = playingFieldObject.score + playingFieldObject.tileArray[0].snake.points;
+    //scoreSpan.textContent = parseInt(scoreSpan.textContent) + playingFieldObject.tileArray[0].snake.points;
   }
 }
 )
@@ -725,6 +735,8 @@ startStop.addEventListener('click', () => {
     document.querySelector('#timer span').textContent = '--';
     // reset level
     document.querySelector('#level span').textContent = '-';
+    // clear tileArray 
+    playingFieldObject.tileArray.splice(0);
     // clear achievements
     playingFieldObject.achievementsArray.splice(0);
     console.log(playingFieldObject.achievementsArray);
@@ -761,7 +773,7 @@ nextLevel.setAttribute('disabled', true);
 nextLevel.addEventListener('click', () => {
   // disable button
   nextLevel.setAttribute('disabled', true)
-  $('.level-over').fadeOut('normal');
+  $('.level-over').fadeOut(1000);
   // stop level timer
   clearInterval(gameTimer);
   // remove objects, stop animal timers
@@ -770,7 +782,7 @@ nextLevel.addEventListener('click', () => {
   // remove level over screen after a short delay
   setTimeout(function () {
     playingField.style.removeProperty('display');
-  }, 500);
+  }, 1000);
   // update level
   const levelSpan = document.querySelector('#level span');
   const level = parseInt(levelSpan.textContent) + 1;
