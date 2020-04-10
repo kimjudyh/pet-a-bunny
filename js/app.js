@@ -12,6 +12,9 @@
  * nextLevel event listener
  * **/
 
+ //todo: remove console log statements, clean up dead code
+ // make achievement threshold lower for presentation
+
 console.log('bunny javascript working');
 
 /** ======== LEVEL OBJECT ======= **/
@@ -72,14 +75,10 @@ class Bunny {
   makeBunnyTimer (bunny) {
     // param bunny: DOM element of the bunny
     let randomDuration = Math.floor(Math.random() * 500) + 500;
-    //let num = 1000; // 2 s
-    //console.log('random bunny ', num);
     this.bunnyTimeout = setTimeout(function () {
       // show bunny 
-      //$(bunny).fadeIn(150);
       bunny.style.removeProperty('display');
       //console.log('showing bunny');
-      //}, num);
     }, randomDuration);
 
   }
@@ -108,10 +107,6 @@ class WhiteBunny extends Bunny {
   }
 }
 
-//const testWhiteBunny = new WhiteBunny();
-//testWhiteBunny.makeElement();
-//console.log(testWhiteBunny.DOMElement);
-//console.log(testWhiteBunny.points);
 
 class GoldBunny extends Bunny {
   constructor() {
@@ -127,10 +122,6 @@ class GoldBunny extends Bunny {
   }
 }
 
-//const testGoldBunny = new GoldBunny();
-//testGoldBunny.makeElement();
-//console.log(testGoldBunny.DOMElement);
-//console.log(testGoldBunny.points);
 
 class Snake {
   constructor() {
@@ -310,9 +301,6 @@ class Tile {
       //console.log('created snake or bunny timer');
     //}, 2000);
     }, Math.floor(Math.random() * 2000) + 1000);
-    //this.animalTimer = animalTimer;
-    //this.interval = Math.floor(Math.random() * 2000) + 2000;
-    //this.duration = Math.floor(Math.random() * 500) + 1000;
   }
   stopTimers() {
     clearInterval(this.animalTimer);
@@ -387,7 +375,7 @@ const playingFieldObject = {
 
       // append hole-area to playing field
       playingField.appendChild(tile.DOMElement);
-      console.log('making holes')
+      //console.log('making holes')
 
       // push tiles to tileArray
       this.tileArray.push(tile);
@@ -402,16 +390,16 @@ const playingFieldObject = {
   // achievements!
   // bunny bopper
   bunnyBopperCheck() {
-    console.log('checking bunny bopper');
-    console.log('bunny count', this.animalCount.bunny);
+    //console.log('checking bunny bopper');
+    //console.log('bunny count', this.animalCount.bunny);
     // if num bunnies clicked = 100, only need to award achievement once
     if (this.animalCount.bunny === 50) {
-      console.log('achieved bunny bopper');
+      //console.log('achieved bunny bopper');
       // change bunny points to +2
       this.tileArray[0].bunny.changePoints(2);
-      console.log('changed bunny points to 5');
+      //console.log('changed bunny points to 5');
       // doesn't change points for whole class.. need for loop
-      console.log('checking bunny 2', this.tileArray[1].bunny.points);
+      //console.log('checking bunny 2', this.tileArray[1].bunny.points);
       // add achievement to achievement array
       this.achievementsArray.push('Bunny Bopper');
       // change text of banner
@@ -426,16 +414,16 @@ const playingFieldObject = {
   },
   // snake handler
   snakeHandlerCheck() {
-    console.log('checking snake handler');
-    console.log('snake count', this.animalCount.snake);
+    //console.log('checking snake handler');
+    //console.log('snake count', this.animalCount.snake);
     // if num snakes clicked = 10, only need to award achievement once
     if (this.animalCount.snake === 10) {
-      console.log('achieved snake handler');
+      //console.log('achieved snake handler');
       // change snake points to +5
       this.tileArray[0].snake.changePoints(5);
-      console.log('changed snake points to 5');
+      //console.log('changed snake points to 5');
       // doesn't change points for whole class.. need for loop
-      console.log('checking snake 2', this.tileArray[1].snake.points);
+      //console.log('checking snake 2', this.tileArray[1].snake.points);
       // add achievement to achievement array
       this.achievementsArray.push('Snake Handler');
       // change text of banner
@@ -450,11 +438,11 @@ const playingFieldObject = {
   },
   // magician
   magicianCheck() {
-    console.log('checking magician');
-    console.log('white bunny count', this.animalCount.whiteBunny);
+    //console.log('checking magician');
+    //console.log('white bunny count', this.animalCount.whiteBunny);
     // if num white bunnies clicked === 20
     if (this.animalCount.whiteBunny === 20) {
-      console.log('achieved magician');
+      //console.log('achieved magician');
       // add x points to score, getting in later level gives less points
       this.score += Math.floor(300/ this.level);
       // add achievement to achievement array
@@ -471,11 +459,11 @@ const playingFieldObject = {
   },
   // gold rush
   goldRushCheck() {
-    console.log('checking gold rush');
-    console.log('gold bunny count', this.animalCount.goldBunny);
+    //console.log('checking gold rush');
+    //console.log('gold bunny count', this.animalCount.goldBunny);
     // if num gold bunnies clicked = 10
     if (this.animalCount.goldBunny === 10) {
-      console.log('achieved gold rush');
+      //console.log('achieved gold rush');
       // add x points to score, getting in later level gives less points
       this.score += Math.floor(600 / this.level);
       // add achievement to achievement array
@@ -574,7 +562,7 @@ const setTimer = function(time) {
       clearInterval(timer);
       playingFieldObject.endLevel();
       setTimeout(function() {
-        console.log('fading out');
+        //console.log('fading out');
         $('.playing-field').fadeOut(2000);
       }, 1000);
       setTimeout(function() {
@@ -582,17 +570,17 @@ const setTimer = function(time) {
       }, 3000)
 
       // game over screen- display if end of last level
-      console.log('level: ', level)
+      //console.log('level: ', level)
       if (level === levelProperties.length) {
-        console.log('last level');
+        //console.log('last level');
         playingFieldObject.fillGameOverScreen();
         setTimeout(function() {
-          console.log('displaying game over screen');
+          //console.log('displaying game over screen');
           $('.game-over').fadeIn('normal');
         }, 3500);
         }
       else {
-        console.log('display level over screen');
+        //console.log('display level over screen');
         playingFieldObject.fillLevelScreen(level);
         const nextLevel = document.querySelector('.next-level button');
         setTimeout(function () {
@@ -602,7 +590,7 @@ const setTimer = function(time) {
 
       }
     
-      console.log(playingFieldObject.animalCount);
+      //console.log(playingFieldObject.animalCount);
     }
     // decrement time
     time --;
@@ -616,7 +604,7 @@ const setTimer = function(time) {
 const playingField = document.querySelector('.playing-field');
 
 playingField.addEventListener('click', (event) => {
-  console.log(event);
+  //console.log(event);
   // get target of click event
   const clickedOn = event.target;
   // get score DOM element
@@ -628,7 +616,7 @@ playingField.addEventListener('click', (event) => {
   playingFieldObject.level = parseInt(levelSpan.textContent);
   // if clicked bunny
   if (clickedOn.classList.contains('bunny')) {
-    console.log('clicked bunny');
+    //console.log('clicked bunny');
     // add clicked class to change display
     clickedOn.classList.add('clicked');
     if (clickedOn.classList.contains('white')) {
@@ -665,7 +653,7 @@ playingField.addEventListener('click', (event) => {
   }
   // if clicked snake
   else if (clickedOn.className === 'snake') {
-    console.log('clicked snake');
+    //console.log('clicked snake');
     // increment counter for snake clicks
     playingFieldObject.animalCount.snake++;
     // check for snake handler achievement
@@ -690,7 +678,7 @@ startStop.addEventListener('click', () => {
   // button says start
   if (startStop.classList.contains('start')) {
     // set up animal count array- 0's with length = # levels
-    console.log(playingFieldObject.animalCount);
+    //console.log(playingFieldObject.animalCount);
     // remove instructions overlay
     // jQuery fade out animation
     $('.instructions').fadeOut('normal');
@@ -739,7 +727,7 @@ startStop.addEventListener('click', () => {
     playingFieldObject.tileArray.splice(0);
     // clear achievements
     playingFieldObject.achievementsArray.splice(0);
-    console.log(playingFieldObject.achievementsArray);
+    //console.log(playingFieldObject.achievementsArray);
     // clear animal counter
     playingFieldObject.animalCount.bunny = 0;
     playingFieldObject.animalCount.whiteBunny = 0;
@@ -748,7 +736,7 @@ startStop.addEventListener('click', () => {
     // hide level over
     document.querySelector('.level-over').style.removeProperty('display');
     document.querySelector('.level-over').setAttribute('display', 'none');
-    console.log('hiding level over');
+    //console.log('hiding level over');
     // hide game over
     document.querySelector('.game-over').style.removeProperty('display');
     document.querySelector('.game-over').setAttribute('display', 'none');
