@@ -2,7 +2,7 @@
 ## Introducing Pet-a-Bunny
 Like Whack-a-Mole, but friendlier and with bunnies!
 
-![game_preview](img/game_preview.png)
+<img src="img/game_preview.png" width=400 height=400>
 
 ## Installation Instructions
 Open a browser, such as Chrome. Click [here](https://pages.git.generalassemb.ly/judykim-ga/pet-a-bunny/) to open the game.
