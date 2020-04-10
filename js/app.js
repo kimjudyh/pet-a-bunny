@@ -342,14 +342,14 @@ const playingFieldObject = {
   },
   achievementsArray: [],
   // func: make counter that is an array of 0's, with length = # levels
-  setUpAnimalCount() {
-    for (let i = 0; i < levelProperties.length; i++) {
-      this.animalCount.bunny.push(0);
-      this.animalCount.whiteBunny.push(0);
-      this.animalCount.goldBunny.push(0);
-      this.animalCount.snake.push(0);
-    }
-  },
+  //setUpAnimalCount() {
+  //  for (let i = 0; i < levelProperties.length; i++) {
+  //    this.animalCount.bunny.push(0);
+  //    this.animalCount.whiteBunny.push(0);
+  //    this.animalCount.goldBunny.push(0);
+  //    this.animalCount.snake.push(0);
+  //  }
+  //},
   // func - make level
   makeLevel(level) {
     // grab playing-field
@@ -561,12 +561,12 @@ let time = 30;
 const timerElement = document.querySelector('#timer span');
 const setTimer = function(time) {
   const timer = setInterval( function() {
-    timerElement.textContent = time;
+    timerElement.textContent = String(time).padStart(2, ' ');
     const levelSpan = document.querySelector('#level span');
     const level = parseInt(levelSpan.textContent);
     // time has reached 0
     if (time === 0) {
-      timerElement.textContent = time;
+      timerElement.textContent = String(time).padStart(2, ' ');
       // stop timer, clear playing field
       clearInterval(timer);
       playingFieldObject.endLevel();
@@ -591,9 +591,12 @@ const setTimer = function(time) {
       else {
         console.log('display level over screen');
         playingFieldObject.fillLevelScreen(level);
+        const nextLevel = document.querySelector('.next-level button');
         setTimeout(function () {
           $('.level-over').fadeIn('normal');
+          nextLevel.removeAttribute('disabled');
         }, 3500)
+
       }
     
       console.log(playingFieldObject.animalCount);
@@ -669,6 +672,7 @@ playingField.addEventListener('click', (event) => {
 /** ======== BUTTONS ========= **/
 // start/stop button
 const startStop = document.querySelector('#start-stop button');
+const instructions = document.querySelector('.instructions');
 let gameTimer;
 startStop.addEventListener('click', () => {
   // button says start
@@ -681,10 +685,12 @@ startStop.addEventListener('click', () => {
     // wait 1s to allow for animation to complete
     // then fill the playing field
     setTimeout(function(){
+      // move instructions to playing-field-container so it's not deleted
+      document.querySelector('.playing-field-container').appendChild(instructions);
       startStop.classList.remove('start');
       // change button to stop
-      startStop.classList.add('stop');
-      startStop.textContent = 'STOP';
+      startStop.classList.add('restart');
+      startStop.textContent = 'RESTART';
 
       // make level 1
       playingFieldObject.makeLevel(1);
@@ -694,24 +700,56 @@ startStop.addEventListener('click', () => {
     }, 1000);
   }
   // button says stop
-  else if (startStop.classList.contains('stop')) {
-    // clear playing field, stop animal timers
+  //else if (startStop.classList.contains('stop')) {
+  //  // clear playing field, stop animal timers
+  //  playingFieldObject.endLevel();
+  //  playingFieldObject.clearPlayingField();
+  //  // stop level countdown timer
+  //  clearInterval(gameTimer);
+
+  //  // change button to restart
+  //  startStop.classList.remove('stop');
+  //  startStop.classList.add('restart');
+  //  startStop.textContent = 'RESTART';
+  //}
+  else if (startStop.classList.contains('restart')) {
     playingFieldObject.endLevel();
     playingFieldObject.clearPlayingField();
-    // stop level countdown timer
     clearInterval(gameTimer);
-
+    // reset score
+    document.querySelector('#score span').textContent = 0;
+    // reset timer
+    document.querySelector('#timer span').textContent = '--';
+    // reset level
+    document.querySelector('#level span').textContent = '-';
+    // clear achievements
+    playingFieldObject.achievementsArray.splice(0);
+    console.log(playingFieldObject.achievementsArray);
+    // clear animal counter
+    playingFieldObject.animalCount.bunny = 0;
+    playingFieldObject.animalCount.whiteBunny = 0;
+    playingFieldObject.animalCount.goldBunny = 0;
+    playingFieldObject.animalCount.snake = 0;
+    // hide level over
+    // hide game over
+    // display instructions
+    document.querySelector('.playing-field').appendChild(document.querySelector('.instructions'));
+    document.querySelector('.instructions').style.removeProperty('display');
     // change button to start
-    //startStop.classList.remove('stop');
-    //startStop.classList.add('start');
-    //startStop.textContent = 'START';
+    startStop.classList.remove('restart');
+    startStop.classList.add('start');
+    startStop.textContent = 'START';
+    
   }
 })
 
 // next level button
 const nextLevel = document.querySelector('.next-level button');
+nextLevel.setAttribute('disabled', true);
 
 nextLevel.addEventListener('click', () => {
+  // disable button
+  nextLevel.setAttribute('disabled', true)
   $('.level-over').fadeOut('normal');
   // stop level timer
   clearInterval(gameTimer);

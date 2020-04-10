@@ -3,7 +3,6 @@ body {
   justify-content: center;
   align-items: center;
   height: 90vh;
-  cursor: url('../img/hand.svg'), default;
   font-family: 'Baloo Paaji 2', cursive;
   background-color: #96B3A9;
 }
@@ -40,6 +39,11 @@ button {
   padding: 4px 8px;
 }
 
+.next-level button:disabled:hover {
+  cursor: default;
+  box-shadow: none;
+}
+
 button:hover {
   cursor: pointer;
   box-shadow: -2px 2px;
@@ -48,7 +52,22 @@ button:hover {
 button:focus {
   outline: 0;
 }
+/*
+pre {
+  display: flex;
+  font-family: 'Pacifico', cursive;
+  font-size: 22px;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
 
+pre span {
+  font-family: 'Fira Mono', monospace;
+  font-size: 22px;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
+*/
 #timer {
   font-family: 'Pacifico', cursive;
   font-size: 22px;
@@ -56,6 +75,7 @@ button:focus {
 
 #timer span{
   font-family: 'Fira Mono', monospace;
+  white-space: pre;
 }
 
 .playing-field-container {
