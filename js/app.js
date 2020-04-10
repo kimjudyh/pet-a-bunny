@@ -505,12 +505,12 @@ const playingFieldObject = {
     document.querySelector('.game-over .gold-bunny-count').textContent = this.animalCount.goldBunny;
     document.querySelector('.game-over .snake-count').textContent = this.animalCount.snake;
 
+    const achievementsDiv = document.querySelector('.game-over .achievements');
     // clear it out
     while (achievementsDiv.firstChild) {
       achievementsDiv.removeChild(achievementsDiv.firstChild);
     }
     // display achievements
-    const achievementsDiv = document.querySelector('.game-over .achievements');
     for (let i = 0; i < this.achievementsArray.length; i++) {
       let achievementP = document.createElement('p');
       achievementP.textContent = this.achievementsArray[i];
