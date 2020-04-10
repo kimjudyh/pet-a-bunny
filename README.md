@@ -8,7 +8,7 @@ Like Whack-a-Mole, but friendlier and with bunnies!
 Open a browser, such as Chrome. Click [here](https://pages.git.generalassemb.ly/judykim-ga/pet-a-bunny/) to open the game.
 
 ## User Stories
-Bunnies pop out of their hole. The player tries to pet as many as possible in a given time limit. In the next level, the pattern changes.
+When the user opens the game, they first see instructions on how to play. When they press start, the first level appears, the timer starts, and bunnies start popping out of their hole. The user tries to pet as many as possible before the time runs out, trying to achieve game bonuses along the way. When the timer hits 0, the level ends and game stats are displayed. The user clicks the Next Level button to start the next level. During the game, a Restart button is available to start over. When the game is over, a game summary screen appears.
 
 ## Wireframes
 ![wireframe1](img/wireframe1.png)

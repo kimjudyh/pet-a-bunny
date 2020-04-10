@@ -52,22 +52,7 @@ button:hover {
 button:focus {
   outline: 0;
 }
-/*
-pre {
-  display: flex;
-  font-family: 'Pacifico', cursive;
-  font-size: 22px;
-  padding: 0 0 0 0;
-  margin: 0 0 0 0;
-}
 
-pre span {
-  font-family: 'Fira Mono', monospace;
-  font-size: 22px;
-  padding: 0 0 0 0;
-  margin: 0 0 0 0;
-}
-*/
 #timer {
   font-family: 'Pacifico', cursive;
   font-size: 22px;
@@ -200,6 +185,7 @@ pre span {
 .banner h5 {
   margin: 0 0;
 }
+
 
 @media screen and (max-width: 500px) {
   .hole {
